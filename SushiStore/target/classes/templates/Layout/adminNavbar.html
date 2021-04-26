@@ -1,0 +1,31 @@
+<div class="dropDownMenu"
+     xmlns:th="https://www.thymeleaf.org"
+     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+     xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+     <div class="dashboard">
+         Dashboard
+     </div>
+    <ul class="toggleMenu">
+        <li  sec:authorize="hasRole('ROLE_ADMIN')">
+            <a th:href="@{/admin/showusers}">Пользователи</a>
+        </li>
+        <li>
+            <a th:href="@{/admin/adsushi}">Суши</a>
+        </li>
+        <li>
+            <a th:href="@{/}">Роллы</a>
+        </li>
+        <li>
+            <a th:href="@{/}">Сеты</a>
+        </li>
+        <li>
+            <a th:href="@{/admin/drinksList}">Напитки</a>
+        </li>
+        <li>
+            <a th:href="@{/admin/ingredients}">Ингредиенты</a>
+        </li>
+        <li>
+            <a th:href="@{/}">Заказы</a>
+        </li>
+    </ul>
+</div>

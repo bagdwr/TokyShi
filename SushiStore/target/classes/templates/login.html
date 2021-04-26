@@ -1,0 +1,55 @@
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="Layout/main.html">
+     <div layout:fragment="site_cont">
+          <div class="row mt-5 forma">
+               <div class="col-6 offset-3">
+                    <form th:action="@{'/auth'}" method="post">
+                         <div class="form-group">
+                              <label>Email</label>
+                              <input type="email" name="email" class="form-control" required>
+                         </div>
+                         <div class="form-group">
+                              <label th:text="Пароль"></label>
+                              <input type="password" name="password" class="form-control" required>
+                         </div>
+                         <div class="form-group btns">
+                              <button class="btn btn-success" th:text="Войти"></button>
+                              <a th:href="@{'/register'}" class="btn">Регистрация</a>
+                         </div>
+                    </form>
+                    <style>
+                         .forma{
+                              margin-top: 100px!important;
+                         }
+                         form{
+                              font-family: 'Montserrat', sans-serif;
+                         }
+                         .btns button{
+                              background-color: #28a745;
+                              transition: 0.3s;
+                              border:1px solid transparent;
+                         }
+                         .btns button:hover{
+                              border: 1px solid #28a745;
+                              background-color: white;
+                              color: #28a745;
+                         }
+                         .btns a{
+                              transition: 0.3s;
+                              padding: 7px;
+                              border: 0px;
+                              margin-left: 10px;
+                         }
+                         .btns a:hover{
+                              background-color: #28a745;
+                              color: white;
+                         }
+                         .siteContent{
+                              display: block!important;
+                         }
+                    </style>
+               </div>
+          </div>
+     </div>
+</html>

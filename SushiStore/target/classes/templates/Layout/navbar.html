@@ -1,0 +1,32 @@
+<nav class="menuFull">
+<div class="menu"
+     xmlns:th="https://www.thymeleaf.org"
+     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+     xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <a class="Logo" th:href="@{/}">
+        Tokyshi
+    </a>
+
+    <ul class="references">
+        <li>
+            <a th:href="@{'/sushi'}">Суши</a>
+        </li>
+        <li>
+            <a th:href="@{'/rolls'}">Роллы</a>
+        </li>
+        <li>
+            <a th:href="@{'/sets'}">Сеты</a>
+        </li>
+        <li>
+            <a th:href="@{'/drinks'}">Напитки</a>
+        </li>
+        <li sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_MODERATOR')">
+            <a th:href="@{'/admin'}">Админ</a>
+        </li>
+    </ul>
+    <a class="LogIn" th:href="@{'/login'}" sec:authorize="isAnonymous()">Войти</a>
+    <a class="LogIn" href="JavaScript:void(0)" onclick="document.getElementById('logoutFormID').submit()" sec:authorize="isAuthenticated()">Выйти</a>
+    <form th:action="@{'/logout'}" method="post" id="logoutFormID" sec:authorize="isAuthenticated()">
+    </form>
+</div>
+</nav>

@@ -1,0 +1,81 @@
+<html   xmlns:th="https://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorator="Layout/admin.html">
+<div layout:fragment="right_content">
+    <div class="container">
+        <div class="row">
+            <div class="col-6 offset-3">
+                <form th:action="@{'/admin/saveUser'}" method="post">
+                    <div class="form-group">
+                        <input type="hidden" name="id", th:value="${user.getId()}">
+                        <label>Email</label>
+                        <input type="email" name="email" class="form-control" required th:value="${user.getEmail()}">
+                    </div>
+                    <div class="form-group">
+                        <label>ФИО</label>
+                        <input type="text" name="fullname" class="form-control" required th:value="${user.getFullname()}">
+                    </div>
+                    <div class="form-group">
+                        <label>Номер телефона</label>
+                        <input type="number" name="phoneNumber" class="form-control" required th:value="${user.getPhone()}">
+                    </div>
+                    <div class="form-group btns">
+                        <button class="btn btn-success" th:text="Сохранить"></button>
+                        <a class="btn btn-danger del" th:href="@{'/admin/deleteUser/'+${user.getId()}}">Удалить</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+         <!-- Unassign role       -->
+        <div class="row mt-5" id="rolesDiv">
+            <div class="col-6 offset-3">
+                <table class="table table-striped">
+                    <tbody>
+                    <tr th:each="role:${unassignRoles}">
+                        <form th:action="@{'/admin/unassignRole'}" method="post">
+                            <input type="hidden" th:value="${user.getId()}" name="user_id">
+                            <input type="hidden" th:value="${role.getRole()}" name="roleName">
+                            <td th:text="${role.getRole()}"></td>
+                            <td width="10%">
+                                <button class="btn btn-danger btn-sm">-</button>
+                            </td>
+                        </form>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!--assign role       -->
+        <div class="row mt-5">
+            <div class="col-6 offset-3">
+                <table class="table table-striped">
+                    <tbody>
+                    <tr th:each="role:${assignRoles}">
+                        <form th:action="@{'/admin/assignRole'}" method="post">
+                            <input type="hidden" th:value="${user.getId()}" name="user_id">
+                            <input type="hidden" th:value="${role.getRole()}" name="roleName">
+                            <td th:text="${role.getRole()}"></td>
+                            <td width="10%">
+                                <button class="btn btn-success btn-sm">+</button>
+                            </td>
+                        </form>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <style>
+        .rightContent{
+            margin:0!important;
+            width: 100%;
+        }
+        .del{
+            float: right;
+        }
+    </style>
+</div>
+
+</html>

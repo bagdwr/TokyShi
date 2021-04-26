@@ -1,0 +1,44 @@
+<html   xmlns:th="https://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+        layout:decorator="Layout/admin.html">
+<div layout:fragment="right_content">
+    <div class="container">
+        <div class="row">
+            <div class="col sm-6">
+                <a sec:authorize="hasRole('ROLE_ADMIN')" class="btn btn-success createBTN" th:href="@{'/admin/createDrink'}">Создать</a>
+                <table  class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Название напитка</th>
+                        <th>Цена</th>
+                        <th sec:authorize="hasRole('ROLE_ADMIN')">Редактировать</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                       <tr th:each="drink:${drinks}">
+                           <th th:text="${drink.getId()}"></th>
+                           <th th:text="${drink.getName()}">Название напитка</th>
+                           <th th:text="${drink.getPrice()}">Цена</th>
+                           <th sec:authorize="hasRole('ROLE_ADMIN')">
+                               <a th:href="@{'/admin/drinkedit/'+${drink.getId()}}" class="btn btn-info btn-sm">Редактировать</a>
+                           </th>
+                       </tr>
+                    </tbody>
+                </table>
+            </div>
+            <style>
+                .rightContent{
+                    margin:0!important;
+                    width: 100%;
+                }
+                .createBTN{
+                    float: right;
+                    margin-bottom: 20px;
+                }
+            </style>
+        </div>
+    </div>
+</div>
+</html>

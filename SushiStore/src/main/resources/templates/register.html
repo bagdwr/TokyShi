@@ -1,0 +1,52 @@
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="Layout/main.html">
+      <div layout:fragment="site_cont">
+          <div class="row mt-5 forma">
+              <div class="col-6 offset-3">
+                  <form th:action="@{'/signup'}" method="post">
+                      <div class="form-group">
+                          <label>Email</label>
+                          <input type="email" name="email" class="form-control" required>
+                      </div>
+                      <div class="form-group">
+                          <label th:text="Пароль"></label>
+                          <input type="password" name="password" class="form-control" required>
+                      </div>
+                      <div class="form-group">
+                          <label>ФИО</label>
+                          <input type="text" name="fullname" class="form-control" required>
+                      </div>
+                      <div class="form-group">
+                          <label>Номер телефона</label>
+                          <input type="number" name="phoneNumber" class="form-control" required>
+                      </div>
+                      <div class="form-group btns">
+                          <button class="btn btn-success" th:text="Зарегистрироваться"></button>
+                      </div>
+                  </form>
+                  <style>
+                      .forma{
+                          margin-top: 100px!important;
+                      }
+                      form{
+                          font-family: 'Montserrat', sans-serif;
+                      }
+                      .btns button{
+                          background-color: #28a745;
+                          border:1px solid transparent;
+                          transition: 0.3s;
+                      }
+                      .btns button:hover{
+                          background-color: white;
+                          color:#28a745;
+                          border: 1px solid #28a745;
+                      }
+                      .siteContent{
+                          display: block!important;
+                      }
+                  </style>
+              </div>
+          </div>
+      </div>
+</html>
