@@ -365,11 +365,10 @@ public class AdminController {
     }
 
     //region Sushi
-    @GetMapping(value = "/adminsushi")
+    @GetMapping(value = "/adminSushi")
     public String showListSushi(Model model){
            model.addAttribute("sushi",foodService.getAllSushi());
            return "foods/sushiList";
     }
     //endregion
-
 }

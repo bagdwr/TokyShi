@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="SushiStoreDB@localhost" uuid="1b5334fe-370e-406c-9aa1-738823d790fe">
+    <data-source source="LOCAL" name="SushiStoreDB@localhost [2]" uuid="913bc344-237c-4fc2-9d17-5b7a2cd0236c">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>

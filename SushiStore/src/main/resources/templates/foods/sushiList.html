@@ -10,12 +10,22 @@
                 <table  class="table table-striped">
                     <thead>
                     <tr>
-
+                        <th>ID</th>
+                        <th>Наименование</th>
+                        <th>Ингредиенты</th>
+                        <th>Цена</th>
+                        <th sec:authorize="hasRole('ROLE_ADMIN')">Редактировать</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="">
-
+                    <tr th:each="s:${sushi}">
+                        <th th:text="${s.getId()}"></th>
+                        <th th:text="${s.getName()}"></th>
+                        <th th:text="${s.getIngredients()}"></th>
+                        <th th:text="${s.getPrice()}"></th>
+                        <th sec:authorize="hasRole('ROLE_ADMIN')">
+                            <a th:href="@{'/admin/sushiEdit/'+${s.getId()}}" class="btn btn-info btn-sm">Редактировать</a>
+                        </th>
                     </tr>
                     </tbody>
                 </table>
