@@ -1,9 +1,6 @@
 package com.example.SushiStore.Controllers;
 
-import com.example.SushiStore.Entity.Drinks;
-import com.example.SushiStore.Entity.Ingredients;
-import com.example.SushiStore.Entity.Roles;
-import com.example.SushiStore.Entity.Users;
+import com.example.SushiStore.Entity.*;
 import com.example.SushiStore.Repositories.RoleRepository;
 import com.example.SushiStore.Service.FoodService;
 import com.example.SushiStore.Service.UserService;
@@ -20,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Array;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -59,11 +57,6 @@ public class AdminController {
     public String showUsers(Model model){
         model.addAttribute("users",userService.getAllUsers());
         return "adminPages/adminUsers";
-    }
-
-    @GetMapping(value = "/adsushi")
-    public String getSushi(Model model){
-        return "adminSushi";
     }
 
     @GetMapping(value = "/edit/{id}")
@@ -163,7 +156,7 @@ public class AdminController {
         }
         return "redirect:/admin/edit/"+id+"?unassignRoleError";
     }
-
+    //region ingredients
     @GetMapping(value = "/ingredients")
     public String ingredientsTable(Model model){
         model.addAttribute("ingredients",foodService.getAllIngredients());
@@ -233,8 +226,9 @@ public class AdminController {
 
         return "redirect:/admin/ingredients";
     }
+    //endregion
 
-
+    //region drink
     @GetMapping(value = "/drinksList")
     public String retunDrinksList(Model model){
         ArrayList<Drinks>drinks= foodService.getAllDrinks();
@@ -349,7 +343,7 @@ public class AdminController {
         }
         return "redirect:/admin/drinksList";
     }
-
+    //endregion
     @GetMapping(value = "/viewphoto/{url}",produces = {MediaType.IMAGE_JPEG_VALUE})
     public @ResponseBody byte[] viewDrinkPicture(
             @PathVariable(name = "url") String url
@@ -370,5 +364,12 @@ public class AdminController {
              return IOUtils.toByteArray(in);
     }
 
+    //region Sushi
+    @GetMapping(value = "/adminsushi")
+    public String showListSushi(Model model){
+           model.addAttribute("sushi",foodService.getAllSushi());
+           return "foods/sushiList";
+    }
+    //endregion
 
 }

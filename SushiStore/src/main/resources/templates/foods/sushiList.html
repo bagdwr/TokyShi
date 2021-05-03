@@ -1,0 +1,36 @@
+<html   xmlns:th="https://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+        layout:decorator="Layout/admin.html">
+<div layout:fragment="right_content">
+    <div class="container">
+        <div class="row">
+            <div class="col sm-6">
+                <a sec:authorize="hasRole('ROLE_ADMIN')" class="btn btn-success createBTN" th:href="@{'/admin/createSushi'}">Создать</a>
+                <table  class="table table-striped">
+                    <thead>
+                    <tr>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="">
+
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <style sec:authorize="hasRole('ROLE_ADMIN')">
+                .rightContent{
+                    margin:0!important;
+                    width: 100%;
+                }
+                .createBTN{
+                    float: right;
+                    margin-bottom: 20px;
+                }
+            </style>
+        </div>
+    </div>
+</div>
+</html>

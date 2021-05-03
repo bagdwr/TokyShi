@@ -2,8 +2,10 @@ package com.example.SushiStore.Service.implementations;
 
 import com.example.SushiStore.Entity.Drinks;
 import com.example.SushiStore.Entity.Ingredients;
+import com.example.SushiStore.Entity.Sushi;
 import com.example.SushiStore.Repositories.DrinksRepository;
 import com.example.SushiStore.Repositories.IngredientsRepository;
+import com.example.SushiStore.Repositories.SushiRepository;
 import com.example.SushiStore.Service.FoodService;
 import com.sun.xml.bind.v2.TODO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,10 @@ public class FoodServiceImpl implements FoodService {
     @Autowired
     private DrinksRepository drinksRepository;
 
+    @Autowired
+    private SushiRepository sushiRepository;
+
+    //region ingredients
     @Override
     public ArrayList<Ingredients> getAllIngredients() {
         return ingredientsRepository.findAll();
@@ -45,6 +51,9 @@ public class FoodServiceImpl implements FoodService {
         ingredientsRepository.delete(ingredient);
     }
 
+    //endregion
+
+    //region drinks
     @Override
     public ArrayList<Drinks> getAllDrinks() {
         return drinksRepository.findAll();
@@ -64,9 +73,36 @@ public class FoodServiceImpl implements FoodService {
     public Drinks saveDrink(Drinks drink) {
         return drinksRepository.save(drink);
     }
-
     @Override
     public void deleteDrink(Drinks drink) {
         drinksRepository.delete(drink);
     }
+    //endregion
+
+    //region sushi
+    @Override
+    public ArrayList<Sushi> getAllSushi() {
+        return sushiRepository.findAll();
+    }
+
+    @Override
+    public Sushi getOneSushi(Long id) {
+        return sushiRepository.getById(id);
+    }
+
+    @Override
+    public Sushi createSushi(Sushi sushi) {
+        return sushiRepository.save(sushi);
+    }
+
+    @Override
+    public Sushi saveSushi(Sushi sushi) {
+        return sushiRepository.save(sushi);
+    }
+
+    @Override
+    public void deleteSushi(Sushi sushi) {
+        sushiRepository.delete(sushi);
+    }
+    //endregion
 }
