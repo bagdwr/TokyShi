@@ -1,0 +1,95 @@
+<html   xmlns:th="https://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+        layout:decorator="Layout/admin.html">
+<div layout:fragment="right_content">
+<!--    <div class="container">-->
+        <div class="col-6 offset-3">
+            <img th:src="@{'/admin/viewphoto/'+${sushi.getSushi_picture()}}" class="my-3" width="300px" height="300px">
+        </div>
+    <div class="row mt-5">
+        <div class="col-6 offset-3">
+            <form th:action="@{'/admin/saveSushiPicture'}" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="sushi_id" th:value="${sushi.getId()}">
+                <div class="form-group mt-5">
+                    <label>Фотография</label>
+                    <div class="custom-file">
+                        <input type="file" name="sushi_picture">
+                    </div>
+                </div>
+                <div class="form-group btns">
+                    <button type="submit" class="btn btn-success">Сохранить фотографию</button>
+                </div>
+            </form>
+            <form th:action="@{'/admin/saveSushi'}" method="post">
+                <input type="hidden" name="sushi_id" th:value="${sushi.getId()}">
+                <div class="form-group mt-5">
+                    <label>Название суши</label>
+                    <input type="text" name="sushi_name" class="form-control" required th:value="${sushi.getName()}">
+                </div>
+                <div class="form-group">
+                    <label>Цена</label>
+                    <input type="number" name="sushi_price" class="form-control" required th:value="${sushi.getPrice()}">
+                </div>
+                <div class="form-group btns">
+                    <button class="btn btn-success" th:text="Сохранить"></button>
+                    <a class="btn btn-danger del" th:href="@{'/admin/deleteSushi/'+${sushi.getId()}}">Удалить</a>
+                </div>
+            </form>
+     </div>
+     </div>
+            <!-- Unassign ingredient       -->
+            <div class="row mt-5" id="rolesDiv">
+                <div class="col-6 offset-3">
+                    <table class="table table-striped">
+                        <tbody>
+                        <tr th:each="i:${unassignIg}">
+                            <form th:action="@{'/admin/unassignSushiIngredient'}" method="post">
+                                <input type="hidden" th:value="${i.getId()}" name="ingredient_id">
+                                <input type="hidden" th:value="${sushi.getId()}" name="sushi_id">
+                                <td th:text="${i.getIngredientName()}"></td>
+                                <td width="10%">
+                                    <button class="btn btn-danger btn-sm">-</button>
+                                </td>
+                            </form>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!--assign ingredient       -->
+            <div class="row mt-5">
+                <div class="col-6 offset-3">
+                    <table class="table table-striped">
+                        <tbody>
+                        <tr th:each="ing:${assignIg}">
+                            <form th:action="@{'/admin/assignSushiIngredient'}" method="post">
+                                <input type="hidden" th:value="${ing.getId()}" name="ingredient_id">
+                                <input type="hidden" th:value="${sushi.getId()}" name="sushi_id">
+                                <td th:text="${ing.getIngredientName()}"></td>
+                                <td width="10%">
+                                    <button class="btn btn-success btn-sm">+</button>
+                                </td>
+                            </form>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+<!--        </div>-->
+        <style>
+            .rightContent{
+                margin:0!important;
+                width: 100%;
+            }
+            .container{
+                margin-top: 100px;
+            }
+            .del{
+                float: right;
+            }
+        </style>
+    </div>
+</html>

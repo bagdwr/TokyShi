@@ -302,7 +302,7 @@ public class AdminController {
                           Files.write(path,bytes);
                           drink.setDrink_picture(pictureName);
                            if (foodService.saveDrink(drink)!=null){
-                                return "redirect:/admin/drinksList";
+                                return "redirect:/admin/drinkedit/"+id;
                               }
                    }
             }catch (Exception ex){
@@ -407,6 +407,112 @@ public class AdminController {
            ex.printStackTrace();
        }
         return "redirect:/createSushi?error";
+    }
+
+    @GetMapping(value = "/sushiEdit/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public String saveSushi(
+            Model model,
+            @PathVariable(name = "id")Long id
+    ){
+        Sushi sushi=foodService.getOneSushi(id);
+        if (sushi!=null){
+            model.addAttribute("sushi",sushi);
+            model.addAttribute("unassignIg",sushi.getIngredients());
+            ArrayList<Ingredients>assignIng=foodService.getAllIngredients();
+            assignIng.removeAll(sushi.getIngredients());
+            model.addAttribute("assignIg",assignIng);
+        }
+        return "foods/sushiEdit";
+    }
+
+    @PostMapping(value = "/saveSushiPicture")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public String saveSushiPicture(
+            @RequestParam(name = "sushi_picture")MultipartFile file,
+            @RequestParam(name = "sushi_id")Long id
+    ){
+        try {
+            Sushi sushi= foodService.getOneSushi(id);
+            if (sushi!=null){
+                if (file!=null && (file.getContentType().equals("image/jpeg") || file.getContentType().equals("image/jpg") || file.getContentType().equals("image/png"))){
+                    int number= (int) (Math.random()*100000+1);
+                    String pictureName=DigestUtils.sha1Hex("PICTURE"+sushi.toString()+number+"_image");
+                    byte[]bytes=file.getBytes();
+                    Path path=Paths.get(uploadPath+pictureName+".jpeg");
+                    Files.write(path,bytes);
+                    sushi.setSushi_picture(pictureName);
+                    if (foodService.saveSushi(sushi)!=null){
+                        return "redirect:/admin/sushiEdit/"+id;
+                    }
+                }
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return "redirect:/admin/adminSushi";
+    }
+
+    @PostMapping(value = "/saveSushi")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public String saveSushi(
+            @RequestParam(name = "sushi_id")Long id,
+            @RequestParam(name = "sushi_name")String name,
+            @RequestParam(name = "sushi_price")Integer price
+    ){
+        Sushi sushi= foodService.getOneSushi(id);
+        if (sushi!=null){
+            if (name!=null && price!=null){
+                sushi.setPrice(price);
+                sushi.setName(name);
+                if (foodService.saveSushi(sushi)!=null){
+                    return "redirect:/admin/adminSushi";
+                }
+            }
+        }
+        return "redirect:/admin/adminSushi";
+    }
+
+    @PostMapping(value = "/unassignSushiIngredient")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public String unassignSushiIng(
+            @RequestParam(name = "sushi_id")Long id,
+            @RequestParam(name = "ingredient_id")Long ing_id
+    ){
+        Ingredients ingredient=foodService.getOneIngredientById(ing_id);
+        if (ingredient!=null){
+            Sushi sushi= foodService.getOneSushi(id);
+            if (sushi!=null){
+                List<Ingredients>ingredients=sushi.getIngredients();
+                ingredients.remove(ingredient);
+                sushi.setIngredients(ingredients);
+                if (foodService.saveSushi(sushi)!=null){
+                    return "redirect:/admin/sushiEdit/"+id+"#rolesDiv";
+                }
+            }
+        }
+        return "redirect:/admin/adminSushi";
+    }
+
+    @PostMapping(value = "/assignSushiIngredient")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public String assignSushiIng(
+            @RequestParam(name = "sushi_id")Long id,
+            @RequestParam(name = "ingredient_id")Long ing_id
+    ){
+        Ingredients ingredient=foodService.getOneIngredientById(ing_id);
+        if (ingredient!=null){
+            Sushi sushi= foodService.getOneSushi(id);
+            if (sushi!=null){
+                List<Ingredients>ingredients=sushi.getIngredients();
+                ingredients.add(ingredient);
+                sushi.setIngredients(ingredients);
+                if (foodService.saveSushi(sushi)!=null){
+                    return "redirect:/admin/sushiEdit/"+id+"#rolesDiv";
+                }
+            }
+        }
+        return "redirect:/admin/adminSushi";
     }
     //endregion
 }

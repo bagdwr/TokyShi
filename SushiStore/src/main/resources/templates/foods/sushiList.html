@@ -21,7 +21,9 @@
                     <tr th:each="s:${sushi}">
                         <th th:text="${s.getId()}"></th>
                         <th th:text="${s.getName()}"></th>
-                        <th th:text="${s.getIngredients()}"></th>
+                        <th>
+                            <span th:each="ingredient:${s.getIngredients()}" th:text="${ingredient.getIngredientName()}" style="display: block;"></span>
+                        </th>
                         <th th:text="${s.getPrice()}"></th>
                         <th sec:authorize="hasRole('ROLE_ADMIN')">
                             <a th:href="@{'/admin/sushiEdit/'+${s.getId()}}" class="btn btn-info btn-sm">Редактировать</a>
