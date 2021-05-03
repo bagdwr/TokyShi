@@ -514,5 +514,17 @@ public class AdminController {
         }
         return "redirect:/admin/adminSushi";
     }
+
+    @GetMapping(value = "/deleteSushi/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public String deleteSushi(
+            @PathVariable(name = "id")Long id
+    ){
+        Sushi sushi= foodService.getOneSushi(id);
+        if (sushi!=null){
+            foodService.deleteSushi(sushi);
+        }
+        return "redirect:/admin/adminSushi";
+    }
     //endregion
 }
