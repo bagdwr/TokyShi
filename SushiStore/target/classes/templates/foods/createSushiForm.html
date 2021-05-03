@@ -1,0 +1,40 @@
+<html   xmlns:th="https://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+        layout:decorator="Layout/admin.html">
+<div layout:fragment="right_content">
+    <div class="container">
+        <div class="col-6 offset-3">
+            <form th:action="@{'/admin/addSushi'}" method="post" enctype="multipart/form-data">
+                <div class="form-group mt-5">
+                    <label>Фотография</label>
+                    <div class="custom-file">
+                        <input type="file" name="sushi_picture">
+                    </div>
+                </div>
+
+                <div class="form-group mt-5">
+                    <label>Название суши</label>
+                    <input type="text" name="sushi_name" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>Цена</label>
+                    <input type="number" name="sushi_price" class="form-control" required>
+                </div>
+                <div class="form-group btns">
+                    <button class="btn btn-success" th:text="Добавить"></button>
+                </div>
+            </form>
+        </div>
+        <style>
+            .rightContent{
+                margin:0!important;
+                width: 100%;
+            }
+            .container{
+                margin-top: 100px;
+            }
+        </style>
+    </div>
+</div>
+</html>
