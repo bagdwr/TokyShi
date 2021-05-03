@@ -370,5 +370,43 @@ public class AdminController {
            model.addAttribute("sushi",foodService.getAllSushi());
            return "foods/sushiList";
     }
+
+    @GetMapping(value = "/createSushi")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public String createSushi(Model model){
+
+        return "foods/createSushiForm";
+    }
+
+    @PostMapping(value = "/addSushi")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public String addSushi(
+            @RequestParam(name = "sushi_name")String name,
+            @RequestParam(name = "sushi_price")Integer price,
+            @RequestParam(name = "sushi_picture")MultipartFile file
+    ){
+       try {
+           if (name!=null && price!=null && file!=null){
+               Sushi sushi=new Sushi();
+               sushi.setName(name);
+               sushi.setPrice(price);
+               if (file.getContentType().equals("image/jpeg") || file.getContentType().equals("image/jpg") || file.getContentType().equals("image/png")){
+                   int number= (int) (Math.random()*100000+1);
+                   String pictureName=DigestUtils.sha1Hex("PICTURE"+sushi.toString()+number+"_image");
+                   byte[]bytes=file.getBytes();
+                   Path path=Paths.get(uploadPath+pictureName+".jpeg");
+                   Files.write(path,bytes);
+                   sushi.setSushi_picture(pictureName);
+                   if (foodService.saveSushi(sushi)!=null){
+                       return "redirect:/admin/adminSushi";
+                   }
+
+               }
+           }
+       }catch (Exception ex){
+           ex.printStackTrace();
+       }
+        return "redirect:/createSushi?error";
+    }
     //endregion
 }
