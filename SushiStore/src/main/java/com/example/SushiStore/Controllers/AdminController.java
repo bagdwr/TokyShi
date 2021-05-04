@@ -647,5 +647,54 @@ public class AdminController {
         return "redirect:/admin/rollEdit/"+id+"?error";
     }
 
+    @PostMapping(value = "/unassignRollIngredient")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public String unassignIng(
+            @RequestParam(name = "ingredient_id")Long ing_id,
+            @RequestParam(name = "roll_id")Long id
+    ){
+        Ingredients ingredient= foodService.getOneIngredientById(ing_id);
+        Rolls roll= foodService.getOneRolls(id);
+        if (roll!=null && ingredient!=null){
+            List<Ingredients>ingredients=roll.getIngredients();
+            ingredients.remove(ingredient);
+            roll.setIngredients(ingredients);
+            if(foodService.saveRolls(roll)!=null){
+                return "redirect:/admin/rollEdit/"+id+"#rolesDiv";
+            }
+        }
+        return "redirect:/admin/adminRolls";
+    }
+
+    @PostMapping(value = "/assignRollIngredient")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public String assignIng(
+            @RequestParam(name = "ingredient_id")Long ing_id,
+            @RequestParam(name = "roll_id")Long id
+    ){
+        Ingredients ingredient= foodService.getOneIngredientById(ing_id);
+        Rolls roll= foodService.getOneRolls(id);
+        if (roll!=null && ingredient!=null){
+            List<Ingredients>ingredients=roll.getIngredients();
+            ingredients.add(ingredient);
+            roll.setIngredients(ingredients);
+            if (foodService.saveRolls(roll)!=null){
+                return "redirect:/admin/rollEdit/"+id+"#rolesDiv";
+            }
+        }
+        return "redirect:/admin/adminRolls";
+    }
+
+    @GetMapping(value = "/deleteRoll/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public String deleteRoll(
+            @PathVariable(name = "id")Long id
+    ){
+        Rolls roll= foodService.getOneRolls(id);
+        if (roll!=null){
+            foodService.deleteRoll(roll);
+        }
+        return "redirect:/admin/adminRolls";
+    }
     //endregion
 }
