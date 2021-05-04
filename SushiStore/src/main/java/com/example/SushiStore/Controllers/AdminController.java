@@ -11,10 +11,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.persistence.criteria.CriteriaBuilder;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Array;
@@ -572,6 +575,76 @@ public class AdminController {
             ex.printStackTrace();
         }
         return "redirect:/admin/createRoll?error";
+    }
+
+    @GetMapping(value = "/rollEdit/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public String ShowEditForm(
+            Model model,
+            @PathVariable(name = "id")Long id
+    ){
+        Rolls roll= foodService.getOneRolls(id);
+        if (roll!=null){
+            model.addAttribute("roll",roll);
+
+            List<Ingredients>ingredients=roll.getIngredients();
+            model.addAttribute("unassignIng",ingredients);
+
+            List<Ingredients>ing=foodService.getAllIngredients();
+            ing.removeAll(ingredients);
+            model.addAttribute("assignIng",ing);
+            return "foods/rollsEdit";
+        }
+        return "redirect:/admin/adminRolls";
+    }
+
+    @PostMapping(value = "/saveRollPicture")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public String saveRollPict(
+            @RequestParam(name = "roll_id")Long id,
+            @RequestParam(name = "roll_picture")MultipartFile file
+    ){
+        try {
+            Rolls roll= foodService.getOneRolls(id);
+            if (roll!=null){
+                if (file.getContentType().equals("image/jpeg") || file.getContentType().equals("image/jpg") || file.getContentType().equals("image/png")) {
+                    int number= (int) (Math.random()*100000+1);
+                    String pictureName=DigestUtils.sha1Hex("PICTURE"+roll.toString()+number+"_image");
+                    byte[]bytes=file.getBytes();
+                    Path path=Paths.get(uploadPath+pictureName+".jpeg");
+                    Files.write(path,bytes);
+                    roll.setUrl(pictureName);
+                    if (foodService.saveRolls(roll)!=null){
+                        return "redirect:/admin/rollEdit/"+id;
+                    }
+                }
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return "redirect:/admin/adminRolls";
+    }
+
+    @PostMapping(value = "/saveRoll")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public String saveRoll(
+            @RequestParam(name = "roll_id")Long id,
+            @RequestParam(name = "roll_name")String name,
+            @RequestParam(name = "roll_amount")Integer amount,
+            @RequestParam(name = "roll_price")Integer price
+    ){
+        if (name!=null && amount!=null && price!=null){
+            Rolls roll= foodService.getOneRolls(id);
+            if (roll!=null){
+                roll.setPrice(price);
+                roll.setName(name);
+                roll.setAmount(amount);
+                if (foodService.saveRolls(roll)!=null){
+                    return "redirect:/admin/adminRolls";
+                }
+            }
+        }
+        return "redirect:/admin/rollEdit/"+id+"?error";
     }
 
     //endregion
