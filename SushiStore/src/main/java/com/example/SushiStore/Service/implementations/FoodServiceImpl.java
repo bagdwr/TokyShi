@@ -2,9 +2,11 @@ package com.example.SushiStore.Service.implementations;
 
 import com.example.SushiStore.Entity.Drinks;
 import com.example.SushiStore.Entity.Ingredients;
+import com.example.SushiStore.Entity.Rolls;
 import com.example.SushiStore.Entity.Sushi;
 import com.example.SushiStore.Repositories.DrinksRepository;
 import com.example.SushiStore.Repositories.IngredientsRepository;
+import com.example.SushiStore.Repositories.RollsRepository;
 import com.example.SushiStore.Repositories.SushiRepository;
 import com.example.SushiStore.Service.FoodService;
 import com.sun.xml.bind.v2.TODO;
@@ -24,6 +26,9 @@ public class FoodServiceImpl implements FoodService {
 
     @Autowired
     private SushiRepository sushiRepository;
+
+    @Autowired
+    private RollsRepository rollsRepository;
 
     //region ingredients
     @Override
@@ -103,6 +108,33 @@ public class FoodServiceImpl implements FoodService {
     @Override
     public void deleteSushi(Sushi sushi) {
         sushiRepository.delete(sushi);
+    }
+    //endregion
+
+    //region rolls
+    @Override
+    public ArrayList<Rolls> getAllRolls() {
+        return rollsRepository.findAll();
+    }
+
+    @Override
+    public Rolls getOneRolls(Long id) {
+        return rollsRepository.getById(id);
+    }
+
+    @Override
+    public Rolls createRolls(Rolls roll) {
+        return rollsRepository.save(roll);
+    }
+
+    @Override
+    public Rolls saveRolls(Rolls roll) {
+        return rollsRepository.save(roll);
+    }
+
+    @Override
+    public void deleteRoll(Rolls rolls) {
+        rollsRepository.delete(rolls);
     }
     //endregion
 }

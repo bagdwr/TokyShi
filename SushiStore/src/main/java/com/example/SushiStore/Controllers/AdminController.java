@@ -397,7 +397,7 @@ public class AdminController {
                    Path path=Paths.get(uploadPath+pictureName+".jpeg");
                    Files.write(path,bytes);
                    sushi.setSushi_picture(pictureName);
-                   if (foodService.saveSushi(sushi)!=null){
+                   if (foodService.createSushi(sushi)!=null){
                        return "redirect:/admin/adminSushi";
                    }
 
@@ -525,6 +525,21 @@ public class AdminController {
             foodService.deleteSushi(sushi);
         }
         return "redirect:/admin/adminSushi";
+    }
+    //endregion
+
+    //region rolls
+
+    @GetMapping(value = "/adminRolls")
+    public String showRollsList(Model model){
+        model.addAttribute("rolls",foodService.getAllRolls());
+        return "foods/rollsList";
+    }
+
+    @GetMapping(value = "/createRoll")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public String showCreateForm(){
+        return "foods/createRollsForm";
     }
     //endregion
 }

@@ -21,9 +21,12 @@ public class Rolls {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Ingredients> ingredients;
 
     @Column(name = "amount")
     private Integer amount;
+
+    @Column(name = "price")
+    private Integer price;
 }
