@@ -541,5 +541,38 @@ public class AdminController {
     public String showCreateForm(){
         return "foods/createRollsForm";
     }
+
+    @PostMapping(value = "/addRoll")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public String createRoll(
+            @RequestParam(name = "roll_name")String name,
+            @RequestParam(name = "roll_amount")Integer amount,
+            @RequestParam(name = "roll_price")Integer price,
+            @RequestParam(name="roll_picture")MultipartFile file
+    ){
+        try {
+            if (name!=null && amount!=null && price!=null && file!=null){
+                Rolls roll=new Rolls();
+                roll.setName(name);
+                roll.setAmount(amount);
+                roll.setPrice(price);
+                if (file.getContentType().equals("image/jpeg") || file.getContentType().equals("image/jpg") || file.getContentType().equals("image/png")) {
+                    int number= (int) (Math.random()*100000+1);
+                    String pictureName=DigestUtils.sha1Hex("PICTURE"+roll.toString()+number+"_image");
+                    byte[]bytes=file.getBytes();
+                    Path path=Paths.get(uploadPath+pictureName+".jpeg");
+                    Files.write(path,bytes);
+                    roll.setUrl(pictureName);
+                    if (foodService.createRolls(roll)!=null){
+                        return "redirect:/admin/adminRolls";
+                    }
+                }
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return "redirect:/admin/createRoll?error";
+    }
+
     //endregion
 }

@@ -5,21 +5,27 @@
 <div layout:fragment="right_content">
     <div class="container">
         <div class="col-6 offset-3">
-            <form th:action="@{'/admin/addSushi'}" method="post" enctype="multipart/form-data">
+            <form th:action="@{'/admin/addRoll'}" method="post" enctype="multipart/form-data">
                 <div class="form-group mt-5">
                     <label>Фотография</label>
                     <div class="custom-file">
-                        <input type="file" name="sushi_picture">
+                        <input type="file" name="roll_picture">
                     </div>
                 </div>
 
                 <div class="form-group mt-5">
-                    <label>Название суши</label>
-                    <input type="text" name="sushi_name" class="form-control" required>
+                    <label>Название ролла</label>
+                    <input type="text" name="roll_name" class="form-control" required>
                 </div>
+
+                <div class="form-group">
+                    <label>Количество в шт</label>
+                    <input type="number" name="roll_amount" class="form-control" required>
+                </div>
+
                 <div class="form-group">
                     <label>Цена</label>
-                    <input type="number" name="sushi_price" class="form-control" required>
+                    <input type="number" name="roll_price" class="form-control" required>
                 </div>
                 <div class="form-group btns">
                     <button class="btn btn-success" th:text="Добавить"></button>

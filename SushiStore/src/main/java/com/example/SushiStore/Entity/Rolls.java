@@ -21,6 +21,9 @@ public class Rolls {
     @Column(name = "name")
     private String name;
 
+    @Column(name="roll_picture")
+    private String url;
+
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Ingredients> ingredients;
 
