@@ -9,27 +9,30 @@ import java.util.List;
 
 @Entity
 @Data
-@AllArgsConstructor
+@Table(name = "sets")
 @NoArgsConstructor
-@Table(name = "t_rolls")
-public class Rolls {
-    @Id
+@AllArgsConstructor
+public class Sets {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
     @Column(name = "id")
     private Long id;
 
     @Column(name = "name")
     private String name;
 
-    @Column(name="roll_picture")
-    private String url;
-
-    @ManyToMany(fetch = FetchType.LAZY)
-    private List<Ingredients> ingredients;
+    @Column(name = "set_picture")
+    private String set_picture;
 
     @Column(name = "amount")
     private Integer amount;
 
     @Column(name = "price")
     private Integer price;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    private List<Sushi>sushiList;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    private List<Rolls>rollsList;
 }

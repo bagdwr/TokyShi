@@ -697,4 +697,12 @@ public class AdminController {
         return "redirect:/admin/adminRolls";
     }
     //endregion
+
+    //region sets
+    @GetMapping(value = "/adminSets")
+    public String showList(Model model){
+        model.addAttribute("sets",foodService.getAllSets());
+        return "foods/setsList";
+    }
+    //endregion
 }

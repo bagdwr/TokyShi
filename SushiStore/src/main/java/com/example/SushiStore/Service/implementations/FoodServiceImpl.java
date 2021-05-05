@@ -1,15 +1,8 @@
 package com.example.SushiStore.Service.implementations;
 
-import com.example.SushiStore.Entity.Drinks;
-import com.example.SushiStore.Entity.Ingredients;
-import com.example.SushiStore.Entity.Rolls;
-import com.example.SushiStore.Entity.Sushi;
-import com.example.SushiStore.Repositories.DrinksRepository;
-import com.example.SushiStore.Repositories.IngredientsRepository;
-import com.example.SushiStore.Repositories.RollsRepository;
-import com.example.SushiStore.Repositories.SushiRepository;
+import com.example.SushiStore.Entity.*;
+import com.example.SushiStore.Repositories.*;
 import com.example.SushiStore.Service.FoodService;
-import com.sun.xml.bind.v2.TODO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +22,9 @@ public class FoodServiceImpl implements FoodService {
 
     @Autowired
     private RollsRepository rollsRepository;
+
+    @Autowired
+    private SetsRepository setsRepository;
 
     //region ingredients
     @Override
@@ -135,6 +131,34 @@ public class FoodServiceImpl implements FoodService {
     @Override
     public void deleteRoll(Rolls rolls) {
         rollsRepository.delete(rolls);
+    }
+    //endregion
+
+    //region sets
+
+    @Override
+    public ArrayList<Sets> getAllSets() {
+        return setsRepository.findAll();
+    }
+
+    @Override
+    public Sets getOneSet(Long id) {
+        return setsRepository.getById(id);
+    }
+
+    @Override
+    public Sets createSet(Sets set) {
+        return setsRepository.save(set);
+    }
+
+    @Override
+    public Sets saveSet(Sets set) {
+        return setsRepository.save(set);
+    }
+
+    @Override
+    public void deleteSet(Sets set) {
+       setsRepository.delete(set);
     }
     //endregion
 }

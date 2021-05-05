@@ -33,4 +33,11 @@ public interface FoodService {
     Rolls createRolls(Rolls roll);
     Rolls saveRolls(Rolls roll);
     void deleteRoll(Rolls rolls);
+
+    //for sets
+    ArrayList<Sets> getAllSets();
+    Sets getOneSet(Long id);
+    Sets createSet(Sets set);
+    Sets saveSet(Sets set);
+    void deleteSet(Sets set);
 }
