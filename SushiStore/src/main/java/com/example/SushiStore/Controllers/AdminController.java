@@ -11,16 +11,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Array;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -347,25 +344,6 @@ public class AdminController {
         return "redirect:/admin/drinksList";
     }
     //endregion
-    @GetMapping(value = "/viewphoto/{url}",produces = {MediaType.IMAGE_JPEG_VALUE})
-    public @ResponseBody byte[] viewDrinkPicture(
-            @PathVariable(name = "url") String url
-    )throws IOException {
-             String pictureUrl=viewPath+defaultPicture+".jpeg";
-             if (url!=null && !url.equals("null")){
-                 pictureUrl=viewPath+url+".jpeg";
-             }
-             InputStream in;
-             try {
-                 ClassPathResource pathResource=new ClassPathResource(pictureUrl);
-                 in=pathResource.getInputStream();
-             }catch (Exception ex){
-                 ClassPathResource pathResource=new ClassPathResource(viewPath+defaultPicture);
-                 in=pathResource.getInputStream();
-                 ex.printStackTrace();
-             }
-             return IOUtils.toByteArray(in);
-    }
 
     //region Sushi
     @GetMapping(value = "/adminSushi")
@@ -593,7 +571,7 @@ public class AdminController {
             List<Ingredients>ing=foodService.getAllIngredients();
             ing.removeAll(ingredients);
             model.addAttribute("assignIng",ing);
-            return "foods/rollsEdit";
+            return "editRolls";
         }
         return "redirect:/admin/adminRolls";
     }
@@ -704,5 +682,120 @@ public class AdminController {
         model.addAttribute("sets",foodService.getAllSets());
         return "foods/setsList";
     }
+
+    @GetMapping(value = "/createSet")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public String createSet(){
+        return "foods/createSetForm";
+    }
+
+    @PostMapping(value = "/addSet")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public String addSet(
+            @RequestParam(name = "set_name")String name,
+            @RequestParam(name = "set_amount")Integer amount,
+            @RequestParam(name = "set_price")Integer price,
+            @RequestParam(name = "set_picture")MultipartFile file
+            ){
+        try {
+            if (name!=null && amount!=null && price!=null && file!=null){
+                Sets set=new Sets();
+                set.setAmount(amount);
+                set.setPrice(price);
+                set.setName(name);
+                if (file.getContentType().equals("image/jpeg") || file.getContentType().equals("image/jpg") || file.getContentType().equals("image/png")) {
+                    int n=(int)(Math.random()*100000+1);
+                    String pictureName=DigestUtils.sha1Hex("PICTURE"+set.toString()+n+"_image");
+                    byte[]bytes=file.getBytes();
+                    Path path=Paths.get(uploadPath+pictureName+".jpeg");
+                    Files.write(path,bytes);
+                    set.setSet_picture(pictureName);
+                    if (foodService.createSet(set)!=null){
+                        return "redirect:/admin/adminSets";
+                    }
+                }
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return "redirect:/admin/createSet";
+    }
+    @GetMapping(value = "/setEdit/{url}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public String editSet(
+            Model model,
+            @PathVariable(name = "url")Long id
+    ){
+        Sets set=foodService.getOneSet(id);
+        if (set!=null){
+            model.addAttribute("set",set);
+            return "foods/editSet";
+        }
+        return "redirect:/admin/adminSets";
+    }
+
+    @PostMapping(value = "/saveSet")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public String saveSet(
+            @RequestParam(name = "set_id")Long id,
+            @RequestParam(name = "set_name")String name,
+            @RequestParam(name = "set_amount")Integer amount,
+            @RequestParam(name = "set_price")Integer price
+    ){
+        if (name!=null && amount!=null && price!=null){
+            Sets set=foodService.getOneSet(id);
+            if (set!=null){
+                set.setName(name);
+                set.setPrice(price);
+                set.setAmount(amount);
+                if (foodService.saveSet(set)!=null){
+                    return "redirect:/admin/setEdit/"+id;
+                }
+            }
+        }
+        return "redirect:/admin/adminSets";
+    }
+    @PostMapping(value = "/saveSet")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public String savePictSet(
+            @RequestParam(name = "set_id")Long id,
+            @RequestParam(name = "set_picture")MultipartFile file
+    ){
+        Sets set=foodService.getOneSet(id);
+        if (set!=null){
+//            if (file.getContentType().equals("image/jpeg")|| file.getContentType().equals("image/jpg")|file.getContentType().equals("image/png")){
+//                int n=(int)(Math.random()*100000+1);
+//                String pictureName=DigestUtils.sha1Hex("PICTURE"+set.toString()+n+"_image");
+//                byte[]bytes=file.getBytes();
+//                Path path=Paths.get(uploadPath+pictureName+".jpeg");
+//                Files.write(path,bytes);
+//                set.setSet_picture(pictureName);
+//                if (foodService.createSet(set)!=null){
+//                    return "redirect:/admin/adminSets";
+//                }
+//            }
+        }
+        return null;
+    }
     //endregion
+
+    @GetMapping(value = "/viewphoto/{url}",produces = {MediaType.IMAGE_JPEG_VALUE})
+    public @ResponseBody byte[] viewDrinkPicture(
+            @PathVariable(name = "url") String url
+    )throws IOException {
+        String pictureUrl=viewPath+defaultPicture+".jpeg";
+        if (url!=null && !url.equals("null")){
+            pictureUrl=viewPath+url+".jpeg";
+        }
+        InputStream in;
+        try {
+            ClassPathResource pathResource=new ClassPathResource(pictureUrl);
+            in=pathResource.getInputStream();
+        }catch (Exception ex){
+            ClassPathResource pathResource=new ClassPathResource(viewPath+defaultPicture);
+            in=pathResource.getInputStream();
+            ex.printStackTrace();
+        }
+        return IOUtils.toByteArray(in);
+    }
 }
