@@ -1,0 +1,97 @@
+<html   xmlns:th="https://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+        layout:decorator="Layout/admin.html">
+<div layout:fragment="right_content">
+    <!--    <div class="container">-->
+    <div class="col-6 offset-3">
+        <img th:src="@{'/admin/viewphoto/'+${set.getSet_picture()}}" class="my-3" width="300px" height="300px">
+    </div>
+    <div class="row mt-5">
+        <div class="col-6 offset-3">
+            <form th:action="@{'/admin/saveSetPicture'}" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="set_id" th:value="${set.getId()}">
+                <div class="form-group mt-5">
+                    <label>Фотография</label>
+                    <div class="custom-file">
+                        <input type="file" name="set_picture">
+                    </div>
+                </div>
+                <div class="form-group btns">
+                    <button type="submit" class="btn btn-success">Сохранить фотографию</button>
+                </div>
+            </form>
+            <form th:action="@{'/admin/saveSet'}" method="post">
+                <input type="hidden" name="set_id" th:value="${set.getId()}">
+                <div class="form-group mt-5">
+                    <label>Название сета</label>
+                    <input type="text" name="set_name" class="form-control" required th:value="${set.getName()}">
+                </div>
+                <div class="form-group mt-5">
+                    <label>Количество в шт</label>
+                    <input type="text" name="set_amount" class="form-control" required th:value="${set.getAmount()}">
+                </div>
+                <div class="form-group">
+                    <label>Цена</label>
+                    <input type="number" name="set_price" class="form-control" required th:value="${set.getPrice()}">
+                </div>
+                <div class="form-group btns">
+                    <button class="btn btn-success" th:text="Сохранить"></button>
+                    <a class="btn btn-danger del" th:href="@{'/admin/deleteSet/'+${set.getId()}}">Удалить</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- Unassign ingredient       -->
+<!--    <div class="row mt-5" id="rolesDiv">-->
+<!--        <div class="col-6 offset-3">-->
+<!--            <table class="table table-striped">-->
+<!--                <tbody>-->
+<!--                <tr th:each="i:${unassignIng}">-->
+<!--                    <form th:action="@{'/admin/unassignRollIngredient'}" method="post">-->
+<!--                        <input type="hidden" th:value="${i.getId()}" name="ingredient_id">-->
+<!--                        <input type="hidden" th:value="${roll.getId()}" name="roll_id">-->
+<!--                        <td th:text="${i.getIngredientName()}"></td>-->
+<!--                        <td width="10%">-->
+<!--                            <button class="btn btn-danger btn-sm">-</button>-->
+<!--                        </td>-->
+<!--                    </form>-->
+<!--                </tr>-->
+<!--                </tbody>-->
+<!--            </table>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash;assign ingredient       &ndash;&gt;-->
+<!--    <div class="row mt-5">-->
+<!--        <div class="col-6 offset-3">-->
+<!--            <table class="table table-striped">-->
+<!--                <tbody>-->
+<!--                <tr th:each="ing:${assignIng}">-->
+<!--                    <form th:action="@{'/admin/assignRollIngredient'}" method="post">-->
+<!--                        <input type="hidden" th:value="${ing.getId()}" name="ingredient_id">-->
+<!--                        <input type="hidden" th:value="${roll.getId()}" name="roll_id">-->
+<!--                        <td th:text="${ing.getIngredientName()}"></td>-->
+<!--                        <td width="10%">-->
+<!--                            <button class="btn btn-success btn-sm">+</button>-->
+<!--                        </td>-->
+<!--                    </form>-->
+<!--                </tr>-->
+<!--                </tbody>-->
+<!--            </table>-->
+<!--        </div>-->
+<!--    </div>-->
+    <style>
+        .rightContent{
+            margin:0!important;
+            width: 100%;
+        }
+        .container{
+            margin-top: 100px;
+        }
+        .del{
+            float: right;
+        }
+    </style>
+</div>
+</html>
