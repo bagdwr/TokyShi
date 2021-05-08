@@ -571,7 +571,7 @@ public class AdminController {
             List<Ingredients>ing=foodService.getAllIngredients();
             ing.removeAll(ingredients);
             model.addAttribute("assignIng",ing);
-            return "editRolls";
+            return "foods/editRolls";
         }
         return "redirect:/admin/adminRolls";
     }
