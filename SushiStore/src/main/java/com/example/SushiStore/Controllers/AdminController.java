@@ -188,7 +188,7 @@ public class AdminController {
             ingredients.setIngredientName(name);
             if (!ingredients.getIngredientName().trim().isEmpty()){
                 if(foodService.saveIngredient(ingredients)!=null){
-                    return "redirect:/admin/ingredients";
+                    return "redirect:/admin/ingredientEdit/"+id+"?success";
                 }
             }
         }
@@ -302,7 +302,7 @@ public class AdminController {
                           Files.write(path,bytes);
                           drink.setDrink_picture(pictureName);
                            if (foodService.saveDrink(drink)!=null){
-                                return "redirect:/admin/drinkedit/"+id;
+                                return "redirect:/admin/drinkEdit/"+id+"?success";
                               }
                    }
             }catch (Exception ex){
@@ -325,7 +325,7 @@ public class AdminController {
                 drink.setPrice(price);
                 drink.setName(name);
                 if (foodService.saveDrink(drink)!=null){
-                    return "redirect:/admin/drinksList";
+                    return "redirect:/admin/drinkEdit/"+id+"?success";
                 }
             }
         }
@@ -593,14 +593,14 @@ public class AdminController {
                     Files.write(path,bytes);
                     roll.setUrl(pictureName);
                     if (foodService.saveRolls(roll)!=null){
-                        return "redirect:/admin/rollEdit/"+id;
+                        return "redirect:/admin/rollEdit/"+id+"?success";
                     }
                 }
             }
         }catch (Exception ex){
             ex.printStackTrace();
         }
-        return "redirect:/admin/adminRolls";
+        return "redirect:/admin/rollEdit/"+id+"?error";
     }
 
     @PostMapping(value = "/saveRoll")
@@ -729,6 +729,17 @@ public class AdminController {
         Sets set=foodService.getOneSet(id);
         if (set!=null){
             model.addAttribute("set",set);
+            List<Sushi>sushis=foodService.getAllSushi();
+            List<Sushi>setsSushi=set.getSushiList();
+            sushis.removeAll(setsSushi);
+            model.addAttribute("unassignSushi",set.getSushiList());
+            model.addAttribute("assignSushi",sushis);
+
+            List<Rolls>rolls=foodService.getAllRolls();
+            List<Rolls> setsRolls=set.getRollsList();
+            rolls.removeAll(setsRolls);
+            model.addAttribute("unassignRoll",setsRolls);
+            model.addAttribute("assignRoll",rolls);
             return "foods/editSet";
         }
         return "redirect:/admin/adminSets";
@@ -749,33 +760,125 @@ public class AdminController {
                 set.setPrice(price);
                 set.setAmount(amount);
                 if (foodService.saveSet(set)!=null){
-                    return "redirect:/admin/setEdit/"+id;
+                    return "redirect:/admin/adminSets";
                 }
             }
         }
         return "redirect:/admin/adminSets";
     }
-    @PostMapping(value = "/saveSet")
+    @PostMapping(value = "/saveSetPicture")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String savePictSet(
             @RequestParam(name = "set_id")Long id,
             @RequestParam(name = "set_picture")MultipartFile file
     ){
+        try{
+            Sets set=foodService.getOneSet(id);
+            if (set!=null){
+                if (file.getContentType().equals("image/jpeg")|| file.getContentType().equals("image/jpg")|file.getContentType().equals("image/png")){
+                    int n=(int)(Math.random()*100000+1);
+                    String pictureName=DigestUtils.sha1Hex("PICTURE"+set.toString()+n+"_image");
+                    byte[]bytes=file.getBytes();
+                    Path path=Paths.get(uploadPath+pictureName+".jpeg");
+                    Files.write(path,bytes);
+                    set.setSet_picture(pictureName);
+                    if (foodService.createSet(set)!=null){
+                        return "redirect:/admin/setEdit/"+id+"?success";
+                    }
+                }
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return "redirect:/admin/setEdit/"+id+"?error";
+    }
+
+    @PostMapping(value = "/unassignSushi")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public String unassignSushi(
+            @RequestParam(name = "sushi_id")Long sushi_id,
+            @RequestParam(name = "set_id")Long set_id
+    ){
+        Sets set=foodService.getOneSet(set_id);
+        if (set!=null){
+            Sushi sushi= foodService.getOneSushi(sushi_id);
+            List<Sushi>sushis=set.getSushiList();
+            sushis.remove(sushi);
+            set.setSushiList(sushis);
+            if (foodService.saveSet(set)!=null){
+                return "redirect:/admin/setEdit/"+set_id+"#rolesDiv";
+            }
+        }
+        return "redirect:/admin/adminSets";
+    }
+
+    @PostMapping(value = "/assignSushi")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public String assignSushi(
+            @RequestParam(name = "sushi_id")Long sushi_id,
+            @RequestParam(name = "set_id")Long set_id
+    ){
+        Sets set=foodService.getOneSet(set_id);
+        if (set!=null){
+            Sushi sushi= foodService.getOneSushi(sushi_id);
+            List<Sushi>sushis=set.getSushiList();
+            sushis.add(sushi);
+            set.setSushiList(sushis);
+            if (foodService.saveSet(set)!=null){
+                return "redirect:/admin/setEdit/"+set_id+"#rolesDiv";
+            }
+        }
+        return "redirect:/admin/adminSets";
+    }
+
+    @PostMapping(value = "/unassignRoll")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public String unassignRoll(
+            @RequestParam(name = "roll_id")Long roll_id,
+            @RequestParam(name = "set_id")Long set_id
+    ){
+        Sets set=foodService.getOneSet(set_id);
+        if (set!=null){
+            Rolls roll= foodService.getOneRolls(roll_id);
+            List<Rolls>rolls=set.getRollsList();
+            rolls.remove(roll);
+            set.setRollsList(rolls);
+            if (foodService.saveSet(set)!=null){
+                return "redirect:/admin/setEdit/"+set_id+"#rollDiv";
+            }
+        }
+        return "redirect:/admin/adminSets";
+    }
+
+    @PostMapping(value = "/assignRoll")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public String assignRoll(
+            @RequestParam(name = "roll_id")Long roll_id,
+            @RequestParam(name = "set_id")Long set_id
+    ){
+        Sets set=foodService.getOneSet(set_id);
+        if (set!=null){
+            Rolls roll= foodService.getOneRolls(roll_id);
+            List<Rolls>rolls=set.getRollsList();
+            rolls.add(roll);
+            set.setRollsList(rolls);
+            if (foodService.saveSet(set)!=null){
+                return "redirect:/admin/setEdit/"+set_id+"#rollDiv";
+            }
+        }
+        return "redirect:/admin/adminSets";
+    }
+
+    @GetMapping(value = "/deleteSet/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public String deleteSet(
+            @PathVariable(name = "id")Long id
+    ){
         Sets set=foodService.getOneSet(id);
         if (set!=null){
-//            if (file.getContentType().equals("image/jpeg")|| file.getContentType().equals("image/jpg")|file.getContentType().equals("image/png")){
-//                int n=(int)(Math.random()*100000+1);
-//                String pictureName=DigestUtils.sha1Hex("PICTURE"+set.toString()+n+"_image");
-//                byte[]bytes=file.getBytes();
-//                Path path=Paths.get(uploadPath+pictureName+".jpeg");
-//                Files.write(path,bytes);
-//                set.setSet_picture(pictureName);
-//                if (foodService.createSet(set)!=null){
-//                    return "redirect:/admin/adminSets";
-//                }
-//            }
+            foodService.deleteSet(set);
         }
-        return null;
+        return "redirect:/admin/adminSets";
     }
     //endregion
 

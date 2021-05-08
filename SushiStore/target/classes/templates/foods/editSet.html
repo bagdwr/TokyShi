@@ -42,45 +42,89 @@
             </form>
         </div>
     </div>
-    <!-- Unassign ingredient       -->
-<!--    <div class="row mt-5" id="rolesDiv">-->
-<!--        <div class="col-6 offset-3">-->
-<!--            <table class="table table-striped">-->
-<!--                <tbody>-->
-<!--                <tr th:each="i:${unassignIng}">-->
-<!--                    <form th:action="@{'/admin/unassignRollIngredient'}" method="post">-->
-<!--                        <input type="hidden" th:value="${i.getId()}" name="ingredient_id">-->
-<!--                        <input type="hidden" th:value="${roll.getId()}" name="roll_id">-->
-<!--                        <td th:text="${i.getIngredientName()}"></td>-->
-<!--                        <td width="10%">-->
-<!--                            <button class="btn btn-danger btn-sm">-</button>-->
-<!--                        </td>-->
-<!--                    </form>-->
-<!--                </tr>-->
-<!--                </tbody>-->
-<!--            </table>-->
-<!--        </div>-->
-<!--    </div>-->
 
-<!--    &lt;!&ndash;assign ingredient       &ndash;&gt;-->
-<!--    <div class="row mt-5">-->
-<!--        <div class="col-6 offset-3">-->
-<!--            <table class="table table-striped">-->
-<!--                <tbody>-->
-<!--                <tr th:each="ing:${assignIng}">-->
-<!--                    <form th:action="@{'/admin/assignRollIngredient'}" method="post">-->
-<!--                        <input type="hidden" th:value="${ing.getId()}" name="ingredient_id">-->
-<!--                        <input type="hidden" th:value="${roll.getId()}" name="roll_id">-->
-<!--                        <td th:text="${ing.getIngredientName()}"></td>-->
-<!--                        <td width="10%">-->
-<!--                            <button class="btn btn-success btn-sm">+</button>-->
-<!--                        </td>-->
-<!--                    </form>-->
-<!--                </tr>-->
-<!--                </tbody>-->
-<!--            </table>-->
-<!--        </div>-->
-<!--    </div>-->
+    <h3 style="text-align: center;">Суши список:</h3>
+<!--    Unassign Sushi       -->
+    <div class="row mt-5" id="rolesDiv">
+        <div class="col-6 offset-3">
+            <table class="table table-striped">
+                <tbody>
+                <tr th:each="s:${unassignSushi}">
+                    <form th:action="@{'/admin/unassignSushi'}" method="post">
+                        <input type="hidden" th:value="${s.getId()}" name="sushi_id">
+                        <input type="hidden" th:value="${set.getId()}" name="set_id">
+                        <td th:text="${s.getName()}"></td>
+                        <td width="10%">
+                            <button class="btn btn-danger btn-sm">-</button>
+                        </td>
+                    </form>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!--assign Sushi       -->
+    <div class="row mt-5">
+        <div class="col-6 offset-3">
+            <table class="table table-striped">
+                <tbody>
+                <tr th:each="s:${assignSushi}">
+                    <form th:action="@{'/admin/assignSushi'}" method="post">
+                        <input type="hidden" th:value="${set.getId()}" name="set_id">
+                        <input type="hidden" th:value="${s.getId()}" name="sushi_id">
+                        <td th:text="${s.getName()}"></td>
+                        <td width="10%">
+                            <button class="btn btn-success btn-sm">+</button>
+                        </td>
+                    </form>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <h3 style="text-align: center;">Роллы список:</h3>
+    <!--    Unassign roll       -->
+    <div class="row mt-5" id="rollDiv">
+        <div class="col-6 offset-3">
+            <table class="table table-striped">
+                <tbody>
+                <tr th:each="r:${unassignRoll}">
+                    <form th:action="@{'/admin/unassignRoll'}" method="post">
+                        <input type="hidden" th:value="${set.getId()}" name="set_id">
+                        <input type="hidden" th:value="${r.getId()}" name="roll_id">
+                        <td th:text="${r.getName()}"></td>
+                        <td width="10%">
+                            <button class="btn btn-danger btn-sm">-</button>
+                        </td>
+                    </form>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!--assign roll       -->
+    <div class="row mt-5">
+        <div class="col-6 offset-3">
+            <table class="table table-striped">
+                <tbody>
+                <tr th:each="r:${assignRoll}">
+                    <form th:action="@{'/admin/assignRoll'}" method="post">
+                        <input type="hidden" th:value="${set.getId()}" name="set_id">
+                        <input type="hidden" th:value="${r.getId()}" name="roll_id">
+                        <td th:text="${r.getName()}"></td>
+                        <td width="10%">
+                            <button class="btn btn-success btn-sm">+</button>
+                        </td>
+                    </form>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
     <style>
         .rightContent{
             margin:0!important;
