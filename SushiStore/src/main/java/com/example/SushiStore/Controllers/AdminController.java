@@ -883,11 +883,11 @@ public class AdminController {
     //endregion
 
     @GetMapping(value = "/viewphoto/{url}",produces = {MediaType.IMAGE_JPEG_VALUE})
-    public @ResponseBody byte[] viewDrinkPicture(
+    public @ResponseBody byte[] viewPicture(
             @PathVariable(name = "url") String url
     )throws IOException {
         String pictureUrl=viewPath+defaultPicture+".jpeg";
-        if (url!=null && !url.equals("null")){
+        if (url!=null && !url.equals("null") && !url.isEmpty()){
             pictureUrl=viewPath+url+".jpeg";
         }
         InputStream in;

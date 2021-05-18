@@ -8,7 +8,7 @@
 }
 .menu{
     height: 70px;
-    width: 70%;
+    width: 80%;
     margin: 0 auto;
     display: flex;
     align-items: center;
@@ -56,8 +56,14 @@
     display: none;
 }
 .siteContent{
-    width:70%;
+    width:80%;
     margin: 0 auto;
     display: flex;
     justify-content: center;
+}
+.catalog{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 }

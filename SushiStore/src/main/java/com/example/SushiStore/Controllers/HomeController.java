@@ -2,20 +2,39 @@ package com.example.SushiStore.Controllers;
 
 import com.example.SushiStore.Entity.Roles;
 import com.example.SushiStore.Entity.Users;
+import com.example.SushiStore.Service.FoodService;
 import com.example.SushiStore.Service.UserService;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
+import java.awt.*;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 @Controller
 public class HomeController {
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private FoodService foodService;
+
+    @Value("${file.picture.defaultPicture}")
+    private String defaultPicture;
+
+    @Value("${file.picture.viewPath}")
+    private String viewPath;
+
+    @Value("${file.picture.uploadPath}")
+    private String uploadPath;
 
     @GetMapping(value = "/")
     public String index(){
@@ -50,9 +69,34 @@ public class HomeController {
          user.setPassword(password);
          user.setPhone(phoneNumber);
          if (userService.createUser(user)!=null){
-             return "redirect:/register?success";
+             return "redixrect:/register?success";
          }
          return "redirect:/register?error";
+    }
 
+    @GetMapping(value = "/drinks")
+    public String showDrinks(Model model){
+        model.addAttribute("drinks",foodService.getAllDrinks());
+        return "userPages/user_drinks";
+    }
+
+    @GetMapping(value = "/photo/{url}", produces ={MediaType.IMAGE_JPEG_VALUE})
+    public @ResponseBody byte[] viewPicture(
+            @PathVariable(name = "url")String path
+    ) throws IOException {
+      String pictureUrl=viewPath+defaultPicture+".jpeg";
+      if (path!=null && !path.isEmpty() && !path.equals("null")){
+          pictureUrl=viewPath+path+".jpeg";
+      }
+        InputStream inputStream;
+      try {
+          ClassPathResource pathResource=new ClassPathResource(pictureUrl);
+          inputStream=pathResource.getInputStream();
+      }catch (Exception ex){
+          ex.printStackTrace();
+          ClassPathResource pathResource=new ClassPathResource(viewPath+defaultPicture);
+          inputStream=pathResource.getInputStream();
+      }
+      return IOUtils.toByteArray(inputStream);
     }
 }
