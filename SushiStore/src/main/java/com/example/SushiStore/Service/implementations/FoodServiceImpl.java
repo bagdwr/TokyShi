@@ -78,6 +78,21 @@ public class FoodServiceImpl implements FoodService {
     public void deleteDrink(Drinks drink) {
         drinksRepository.delete(drink);
     }
+
+    @Override
+    public ArrayList<Drinks> getAllDrinksSortedByName() {
+        ArrayList<Drinks>drinks=getAllDrinks();
+        for (int i=0; i<drinks.size()-1; i++){
+            for (int j=0; j<drinks.size()-i-1; j++){
+                if (drinks.get(j).getName().compareTo(drinks.get(j+1).getName())>0){
+                    Drinks temp=drinks.get(j);
+                    drinks.set(j,drinks.get(j+1));
+                    drinks.set(j+1,temp);
+                }
+            }
+        }
+        return drinks;
+    }
     //endregion
 
     //region sushi

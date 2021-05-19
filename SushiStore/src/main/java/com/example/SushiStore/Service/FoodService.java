@@ -15,6 +15,7 @@ public interface FoodService {
 
     //for drinks
     ArrayList<Drinks>getAllDrinks();
+    ArrayList<Drinks>getAllDrinksSortedByName();
     Drinks getOneDrink(Long id);
     Drinks createDrink(Drinks drink);
     Drinks saveDrink(Drinks drink);

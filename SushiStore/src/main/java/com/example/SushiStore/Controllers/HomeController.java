@@ -76,7 +76,7 @@ public class HomeController {
 
     @GetMapping(value = "/drinks")
     public String showDrinks(Model model){
-        model.addAttribute("drinks",foodService.getAllDrinks());
+        model.addAttribute("drinks",foodService.getAllDrinksSortedByName());
         return "userPages/user_drinks";
     }
 

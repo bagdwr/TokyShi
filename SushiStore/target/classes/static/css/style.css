@@ -95,3 +95,37 @@
     width: 190px;
     height: 190px;
 }
+.item_price{
+    font-weight: 600;
+    font-size: 25px;
+    padding-left: 20px;
+    color: #49433c;
+    font-family: 'Roboto', sans-serif;
+}
+.post-description{
+    padding: 25px 0 0 35px;
+    width: 100%;
+}
+.item_name{
+    font-size: 21px;
+    color: #49433c;
+    font-weight: 600;
+    margin-bottom: 100px;
+}
+.item_basket{
+    background-color: greenyellow;
+    border-radius: 10px;
+    display: inline-block;
+    color: #006F48;
+    font-size: 15px;
+    font-weight: 700;
+    padding: 5px 10px;
+    width: 70%;
+    text-align: center;
+    transition: 0.3s;
+}
+.item_basket:hover{
+    color: #006F48;
+    text-decoration: none;
+    box-shadow: 0 0 10px 0 #07cd00;
+}
