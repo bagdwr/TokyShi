@@ -1,0 +1,20 @@
+<html
+        xmlns:th="https://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorator="Layout/main.html">
+<div layout:fragment="site_cont">
+    <section class="catalog">
+        <div th:each="s:${sushi}" class="item_container">
+            <div class="post-img">
+                <img th:src="@{'/photo/'+${s.getSushi_picture()}}" class="item_picture" width="150px" height="150px">
+                <p class="item_price" th:text="${s.getPrice()}+' ₸'"></p>
+            </div>
+            <div class="post-description">
+                <h3 class="item_name" th:text="${s.getName()}"></h3>
+                <p class="item_ingredients" th:text="${s.getIngredientsString()}"></p>
+                <a th:href="@{'/addDrinkToBasket/'+${s.getId()}}" class="item_basket">В корзину</a>
+            </div>
+        </div>
+    </section>
+</div>
+</html>

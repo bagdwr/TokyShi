@@ -23,6 +23,7 @@ public interface FoodService {
 
     //for sushi
     ArrayList<Sushi>getAllSushi();
+    ArrayList<Sushi>getAllSushiSortedByPrice();
     Sushi getOneSushi(Long id);
     Sushi createSushi(Sushi sushi);
     Sushi saveSushi(Sushi sushi);

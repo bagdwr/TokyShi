@@ -110,7 +110,7 @@
     font-size: 21px;
     color: #49433c;
     font-weight: 600;
-    margin-bottom: 100px;
+    margin-bottom: 15px;
 }
 .item_basket{
     background-color: greenyellow;
@@ -118,7 +118,7 @@
     display: inline-block;
     color: #006F48;
     font-size: 15px;
-    font-weight: 700;
+    font-weight: 600;
     padding: 5px 10px;
     width: 70%;
     text-align: center;
@@ -128,4 +128,10 @@
     color: #006F48;
     text-decoration: none;
     box-shadow: 0 0 10px 0 #07cd00;
+}
+.item_ingredients{
+    margin-bottom: 15px;
+    height: 80px;
+    font-size: 14px;
+    color: #49433c;
 }

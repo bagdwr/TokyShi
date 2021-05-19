@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -29,4 +30,13 @@ public class Sushi {
 
     @Column(name = "sushi_picture")
     private String sushi_picture;
+
+    public String getIngredientsString(){
+        List<Ingredients> ingredients= this.ingredients;
+        String s="";
+        for (int i=0; i<ingredients.size(); i++){
+            s=s+ingredients.get(i).getIngredientName()+", ";
+        }
+        return s;
+    }
 }

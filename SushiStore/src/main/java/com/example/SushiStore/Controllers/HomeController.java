@@ -80,6 +80,12 @@ public class HomeController {
         return "userPages/user_drinks";
     }
 
+    @GetMapping(value = "/sushi")
+    public String showSushi(Model model){
+        model.addAttribute("sushi",foodService.getAllSushiSortedByPrice());
+        return "userPages/user_sushi";
+    }
+
     @GetMapping(value = "/photo/{url}", produces ={MediaType.IMAGE_JPEG_VALUE})
     public @ResponseBody byte[] viewPicture(
             @PathVariable(name = "url")String path

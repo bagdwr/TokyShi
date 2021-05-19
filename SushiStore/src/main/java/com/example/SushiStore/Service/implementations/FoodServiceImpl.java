@@ -120,6 +120,22 @@ public class FoodServiceImpl implements FoodService {
     public void deleteSushi(Sushi sushi) {
         sushiRepository.delete(sushi);
     }
+
+    @Override
+    public ArrayList<Sushi> getAllSushiSortedByPrice() {
+        ArrayList<Sushi>sushis=getAllSushi();
+        for (int i=0; i<sushis.size()-1; i++){
+            for (int j=0; j<sushis.size()-i-1; j++){
+                if (sushis.get(j).getPrice()>sushis.get(j+1).getPrice()){
+                    Sushi temp=sushis.get(j);
+                    sushis.set(j,sushis.get(j+1));
+                    sushis.set(j+1,temp);
+                }
+            }
+        }
+        return sushis;
+    }
+
     //endregion
 
     //region rolls

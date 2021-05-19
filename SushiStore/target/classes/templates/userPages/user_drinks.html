@@ -11,6 +11,7 @@
                 </div>
                 <div class="post-description">
                       <h3 class="item_name" th:text="${drink.getName()}"></h3>
+                      <p class="item_ingredients"></p>
                       <a th:href="@{'/addDrinkToBasket/'+${drink.getId()}}" class="item_basket">В корзину</a>
                 </div>
        </div>
