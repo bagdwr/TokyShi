@@ -206,5 +206,21 @@ public class FoodServiceImpl implements FoodService {
     public void deleteSet(Sets set) {
        setsRepository.delete(set);
     }
+
+    @Override
+    public ArrayList<Sets> getAllSetsSortedByPrice() {
+        ArrayList<Sets>sets=getAllSets();
+        for (int i=0; i<sets.size()-1; i++){
+            for (int j=0; j<sets.size()-i-1; j++){
+                if (sets.get(j).getPrice()>sets.get(j+1).getPrice()){
+                    Sets temp=sets.get(j);
+                    sets.set(j,sets.get(j+1));
+                    sets.set(j+1,temp);
+                }
+            }
+        }
+        return sets;
+    }
+
     //endregion
 }

@@ -39,6 +39,7 @@ public interface FoodService {
 
     //for sets
     ArrayList<Sets> getAllSets();
+    ArrayList<Sets>getAllSetsSortedByPrice();
     Sets getOneSet(Long id);
     Sets createSet(Sets set);
     Sets saveSet(Sets set);

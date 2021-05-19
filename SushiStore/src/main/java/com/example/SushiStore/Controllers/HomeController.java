@@ -92,6 +92,12 @@ public class HomeController {
         return "userPages/user_rolls";
     }
 
+    @GetMapping(value = "/sets")
+    public String showSets(Model model){
+        model.addAttribute("sets",foodService.getAllSetsSortedByPrice());
+        return "userPages/user_sets";
+    }
+
     @GetMapping(value = "/photo/{url}", produces ={MediaType.IMAGE_JPEG_VALUE})
     public @ResponseBody byte[] viewPicture(
             @PathVariable(name = "url")String path

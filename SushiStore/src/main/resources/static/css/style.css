@@ -133,7 +133,9 @@
 }
 .item_ingredients{
     margin-bottom: 15px;
-    height: 80px;
+    max-height: 80px;
+    overflow: scroll;
+    width: 100%;
     font-size: 14px;
     color: #49433c;
 }
