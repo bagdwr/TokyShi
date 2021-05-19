@@ -35,7 +35,11 @@ public class Sushi {
         List<Ingredients> ingredients= this.ingredients;
         String s="";
         for (int i=0; i<ingredients.size(); i++){
-            s=s+ingredients.get(i).getIngredientName()+", ";
+            s=s+ingredients.get(i).getIngredientName();
+            if (i==ingredients.size()-1){
+                continue;
+            }
+            s=s+", ";
         }
         return s;
     }

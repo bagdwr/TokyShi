@@ -163,6 +163,21 @@ public class FoodServiceImpl implements FoodService {
     public void deleteRoll(Rolls rolls) {
         rollsRepository.delete(rolls);
     }
+
+    @Override
+    public ArrayList<Rolls> getAllRollsSortedByPrice() {
+        ArrayList<Rolls>rolls=getAllRolls();
+        for (int i=0; i<rolls.size()-1; i++){
+            for (int j=0; j<rolls.size()-i-1; j++){
+                if (rolls.get(j).getPrice()>rolls.get(j+1).getPrice()){
+                    Rolls temp=rolls.get(j);
+                    rolls.set(j,rolls.get(j+1));
+                    rolls.set(j+1,temp);
+                }
+            }
+        }
+        return rolls;
+    }
     //endregion
 
     //region sets

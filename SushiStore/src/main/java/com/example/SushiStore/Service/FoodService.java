@@ -31,6 +31,7 @@ public interface FoodService {
 
     //for rolls
     ArrayList<Rolls>getAllRolls();
+    ArrayList<Rolls>getAllRollsSortedByPrice();
     Rolls getOneRolls(Long id);
     Rolls createRolls(Rolls roll);
     Rolls saveRolls(Rolls roll);
