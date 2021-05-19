@@ -134,6 +134,7 @@
 .item_ingredients{
     margin-bottom: 15px;
     max-height: 80px;
+    height: 80px;
     overflow: scroll;
     width: 100%;
     font-size: 14px;
