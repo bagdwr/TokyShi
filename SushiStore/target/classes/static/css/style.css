@@ -131,9 +131,6 @@
     text-decoration: none;
     box-shadow: 0 0 10px 0 #07cd00;
 }
-.delItem{
-    border: 0!important;
-}
 .item_ingredients{
     margin-bottom: 15px;
     max-height: 80px;

@@ -12,7 +12,7 @@
             <div class="post-description">
                 <h3 class="item_name" th:text="${s.getName()}"></h3>
                 <p class="item_ingredients" th:text="${s.getIngredientsString()}"></p>
-                <form th:action="@{'/addSushiToBasket'}" method="post">
+                <form th:action="@{'/addDrinkToBasket'}" method="post">
                     <input type="hidden" name="item_sushi" th:value="${s.getId()}">
                     <input type="submit" value="В корзину" class="item_basket delItem">
                 </form>
