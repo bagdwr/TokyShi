@@ -13,7 +13,7 @@ import java.util.List;
 @Table(name = "t_sushi")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Sushi {
+public class Sushi extends Items{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

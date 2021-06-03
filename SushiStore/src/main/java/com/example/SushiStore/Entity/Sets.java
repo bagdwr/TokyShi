@@ -12,7 +12,7 @@ import java.util.List;
 @Table(name = "sets")
 @NoArgsConstructor
 @AllArgsConstructor
-public class Sets {
+public class Sets extends Items{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
