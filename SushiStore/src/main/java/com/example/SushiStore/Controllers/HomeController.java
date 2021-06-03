@@ -68,7 +68,7 @@ public class HomeController {
          user.setPassword(password);
          user.setPhone(phoneNumber);
          if (userService.createUser(user)!=null){
-             return "redixrect:/register?success";
+             return "redirect:/register?success";
          }
          return "redirect:/register?error";
     }
@@ -97,31 +97,41 @@ public class HomeController {
         return "userPages/user_sets";
     }
 
+    //region addToBasket
     @PostMapping(value = "/addDrinkToBasket")
-    public String addToBasket(
-            @RequestParam(name = "item_drink")Long drinkId,
-            @RequestParam(name = "item_sushi") Long sushiId,
-            @RequestParam(name = "item_set") Long setId,
-            @RequestParam(name = "item_roll")Long rollId
-            ){
+    public String addDrink(@RequestParam(name = "item_drink")Long drinkId){
         if (drinkId!=null){
             Drinks drink=foodService.getOneDrink(drinkId);
             return "redirect:/drinks";
         }
+        return "redirect://";
+    }
+    @PostMapping(value = "/addSushiToBasket")
+    public String addSushi(@RequestParam(name = "item_sushi")Long sushiId){
         if (sushiId!=null){
             Sushi sushi=foodService.getOneSushi(sushiId);
             return "redirect:/sushi";
         }
-        if (setId!=null){
-            Sets set=foodService.getOneSet(setId);
-            return "redirect:/sets";
-        }
+        return "redirect://";
+    }
+    @PostMapping(value = "/addRollToBasket")
+    public String addRoll(@RequestParam(name = "item_roll")Long rollId){
         if (rollId!=null){
             Rolls rolls=foodService.getOneRolls(rollId);
             return "redirect:/rolls";
         }
-        return "redirect:/";
+        return "redirect://";
     }
+    @PostMapping(value = "/addSetToBasket")
+    public String addSet(@RequestParam(name = "item_set")Long setId){
+        if (setId!=null){
+            Sets set=foodService.getOneSet(setId);
+            return "redirect:/sets";
+        }
+        return "redirect://";
+    }
+
+    //endregion
 
     @GetMapping(value = "/photo/{url}", produces ={MediaType.IMAGE_JPEG_VALUE})
     public @ResponseBody byte[] viewPicture(
