@@ -3,13 +3,13 @@
 }
 .menuFull{
     width: 100%;
-    height: 70px;
+    height: 85px;
     background-color: greenyellow;
     position: fixed;
     top:0;
 }
 .menu{
-    height: 70px;
+    height: 85px;
     width: 90%;
     margin: 0 auto;
     display: flex;
@@ -76,7 +76,7 @@
     margin-left: 7px;
     margin-right: 7px;
     transition: 0.3s;
-    margin-top: 14px!important;
+    margin-top: 24px!important;
     display: flex;
     flex-direction: row;
     padding: 5px 20px 16px;
@@ -142,4 +142,57 @@
     width: 100%;
     font-size: 14px;
     color: #49433c;
+}
+.footerFull{
+    width: 100%;
+    height: 60px;
+    position: fixed;
+    bottom:0;
+    background-color: #f6f6f6;
+}
+.footerMenu{
+    width: 90%;
+    height: inherit;
+    background-color: inherit;
+    z-index: 2;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.footerMenu img{
+    width: 24px;
+    height: 24px;
+}
+.footerMenu ul{
+    list-style: none;
+    margin: 0!important;
+    padding: 0!important;
+}
+.VkInst{
+    width: 20%;
+}
+.VkInst ul{
+    display: flex;
+}
+.VkInst ul li{
+    margin-left:10px;
+}
+.footMenu{
+    width: 30%;
+}
+.footMenu ul{
+    display: flex;
+}
+.downloadApps{
+    display: flex;
+    width: 50%;
+    align-items: center;
+}
+.downloadApps p{
+    margin: 0!important;
+    padding: 0!important;
+}
+.downloadApps ul{
+    display: flex;
 }
