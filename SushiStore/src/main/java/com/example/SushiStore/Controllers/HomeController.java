@@ -1,7 +1,6 @@
 package com.example.SushiStore.Controllers;
 
-import com.example.SushiStore.Entity.Roles;
-import com.example.SushiStore.Entity.Users;
+import com.example.SushiStore.Entity.*;
 import com.example.SushiStore.Service.FoodService;
 import com.example.SushiStore.Service.UserService;
 import org.apache.commons.io.IOUtils;
@@ -96,6 +95,32 @@ public class HomeController {
     public String showSets(Model model){
         model.addAttribute("sets",foodService.getAllSetsSortedByPrice());
         return "userPages/user_sets";
+    }
+
+    @PostMapping(value = "/addDrinkToBasket")
+    public String addToBasket(
+            @RequestParam(name = "item_drink")Long drinkId,
+            @RequestParam(name = "item_sushi") Long sushiId,
+            @RequestParam(name = "item_set") Long setId,
+            @RequestParam(name = "item_roll")Long rollId
+            ){
+        if (drinkId!=null){
+            Drinks drink=foodService.getOneDrink(drinkId);
+            return "redirect:/drinks";
+        }
+        if (sushiId!=null){
+            Sushi sushi=foodService.getOneSushi(sushiId);
+            return "redirect:/sushi";
+        }
+        if (setId!=null){
+            Sets set=foodService.getOneSet(setId);
+            return "redirect:/sets";
+        }
+        if (rollId!=null){
+            Rolls rolls=foodService.getOneRolls(rollId);
+            return "redirect:/rolls";
+        }
+        return "redirect:/";
     }
 
     @GetMapping(value = "/photo/{url}", produces ={MediaType.IMAGE_JPEG_VALUE})

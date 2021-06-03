@@ -12,7 +12,10 @@
             <div class="post-description">
                 <h3 class="item_name" th:text="${set.getName()}"></h3>
                 <p class="item_ingredients" th:text="${set.getItems()}"></p>
-                <a th:href="@{'/addDrinkToBasket/'+${set.getId()}}" class="item_basket">В корзину</a>
+                <form th:action="@{'/addDrinkToBasket'}" method="post">
+                    <input type="hidden" name="item_set" th:value="${set.getId()}">
+                    <input type="submit" value="В корзину" class="item_basket delItem">
+                </form>
             </div>
         </div>
     </section>
