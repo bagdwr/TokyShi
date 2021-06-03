@@ -114,6 +114,9 @@
     font-weight: 600;
     margin-bottom: 15px;
 }
+.delItem{
+    border: 0!important;
+}
 .item_basket{
     background-color: greenyellow;
     border-radius: 10px;
@@ -130,9 +133,6 @@
     color: #006F48;
     text-decoration: none;
     box-shadow: 0 0 10px 0 #07cd00;
-}
-.delItem{
-    border: 0!important;
 }
 .item_ingredients{
     margin-bottom: 15px;

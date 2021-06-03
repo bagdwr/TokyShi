@@ -114,6 +114,9 @@
     font-weight: 600;
     margin-bottom: 15px;
 }
+.delItem{
+    border: 0!important;
+}
 .item_basket{
     background-color: greenyellow;
     border-radius: 10px;
