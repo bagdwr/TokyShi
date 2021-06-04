@@ -184,15 +184,40 @@
 .footMenu ul{
     display: flex;
 }
+.footMenu ul li{
+    margin-left: 20px;
+}
+.footMenu ul li:first-child{
+    background:greenyellow;
+    border-radius: 10px;
+}
+.footMenu ul li a{
+    padding: 5px 20px;
+    display: block;
+    text-decoration: none;
+    color: #49433c;
+    transition: 0.3s;
+}
+.footMenu ul li a:hover{
+    color: #006F48;
+}
+.frstA:hover {
+    color:white!important;
+}
 .downloadApps{
     display: flex;
     width: 50%;
     align-items: center;
+    justify-content: flex-end;
 }
 .downloadApps p{
     margin: 0!important;
     padding: 0!important;
+    color: #49433c;
 }
 .downloadApps ul{
     display: flex;
+}
+.downloadApps ul li{
+    margin-left: 20px;
 }
