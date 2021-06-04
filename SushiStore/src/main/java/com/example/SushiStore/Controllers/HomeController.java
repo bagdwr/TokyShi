@@ -37,7 +37,7 @@ public class HomeController {
 
     @GetMapping(value = "/")
     public String index(){
-        return "index";
+        return "userPages/user_sushi";
     }
 
     @PreAuthorize("isAnonymous()")
@@ -133,6 +133,18 @@ public class HomeController {
 
     //endregion
 
+    @GetMapping(value = "/bonus")
+    public String showBonusPage(){
+        return "footerPages/Bonus";
+    }
+    @GetMapping(value = "/deliver")
+    public String showDeliverPage(){
+        return "footerPages/Deliver";
+    }
+    @GetMapping(value = "/contacts")
+    public String showContactsPage(){
+        return "footerPages/Contacts";
+    }
     @GetMapping(value = "/photo/{url}", produces ={MediaType.IMAGE_JPEG_VALUE})
     public @ResponseBody byte[] viewPicture(
             @PathVariable(name = "url")String path

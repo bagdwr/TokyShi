@@ -6,6 +6,7 @@
     height: 85px;
     background-color: greenyellow;
     position: fixed;
+    z-index: 3;
     top:0;
 }
 .menu{
@@ -196,6 +197,7 @@
     display: block;
     text-decoration: none;
     color: #49433c;
+    font-size: 14px;
     transition: 0.3s;
 }
 .footMenu ul li a:hover{
@@ -214,6 +216,7 @@
     margin: 0!important;
     padding: 0!important;
     color: #49433c;
+    font-size: 14px;
 }
 .downloadApps ul{
     display: flex;
