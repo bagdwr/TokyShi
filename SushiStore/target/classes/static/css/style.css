@@ -158,6 +158,7 @@
     margin: 0 auto;
     display: flex;
     flex-direction: row;
+    align-items: center;
 }
 .footerMenu img{
     width: 24px;
@@ -186,6 +187,11 @@
 .downloadApps{
     display: flex;
     width: 50%;
+    align-items: center;
+}
+.downloadApps p{
+    margin: 0!important;
+    padding: 0!important;
 }
 .downloadApps ul{
     display: flex;
