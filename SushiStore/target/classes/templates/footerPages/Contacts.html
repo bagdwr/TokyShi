@@ -1,0 +1,44 @@
+<html
+        xmlns:th="https://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorator="Layout/main.html">
+<div layout:fragment="site_cont">
+    <div class="container">
+         <div class="row">
+             <div class="col">
+                  <header>НАШ АДРЕС:</header>
+                  <br>
+                   г. Уральск, пр-т. Евразия, ТРЦ "СИТИ ЦЕНТР"
+             </div>
+             <div class="col">
+                   <header>ГРАФИК РАБОТЫ:</header>
+                   <br>
+                 10:00 - 22:00<br>
+                 принимаем заказы до 22:00
+             </div>
+             <div class="col">
+                    <header>ТЕЛЕФОНЫ:</header>
+                 <br>
+                 +77777777777
+                 <br>
+                 +77788888888
+             </div>
+         </div>
+        <div class="row rowMap">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3798.679592959002!2d51.38314165906072!3d51.21969972843951!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4171ba6657c49cbf%3A0x6ea48c27dfbb1664!2sCity%20Center!5e0!3m2!1sen!2skz!4v1622819976266!5m2!1sen!2skz" width="100%" height="400px" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+           </div>
+    </div>
+    <style>
+        .container{
+            margin-top:150px;
+        }
+        .row{
+            color: #49433c!important;
+            font-weight: 550;
+        }
+        .rowMap{
+            margin-top: 60px;
+        }
+    </style>
+</div>
+</html>
