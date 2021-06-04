@@ -3,6 +3,62 @@
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
         layout:decorator="Layout/main.html">
 <div layout:fragment="site_cont">
-    <h1>Deliver</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col iDiv">
+                <div>
+                    <img src="https://трисамурая.рф/img/clock-wow-icon.svg" alt="" width="50px" height="50px">
+                </div>
+                <div>
+                    <header>ВРЕМЯ ДОСТАВКИ:</header>
+                    <br>
+                    По городу - в течение 1 часа<br>
+                    В час-пик - в течение 1,5 часа
+                </div>
+
+            </div>
+            <div class="col iDiv">
+                <div>
+                    <img src="https://трисамурая.рф/img/wallet-icon.svg" alt="" width="50px" height="50px">
+                </div>
+                <div>
+                    <header>СТОИМОСТЬ ДОСТАВКИ:</header>
+                    <br>
+                    Доставка бесплатная, при заказе на сумму от 3500 тенге.<br>
+                    Доставка платная - 500 тенге, при заказе на сумму менее 3500 тенге. Возможность и стоимость доставки в отдаленные районы уточняйте у оператора. Время работы может быть изменено в связи с усилением карантина. Уточните время по телефону.
+
+                </div>
+            </div>
+
+            <div class="col iDiv">
+                <div>
+                    <img src="https://трисамурая.рф/img/helicopter-icon.svg" alt="" width="50px" height="50px">
+                </div>
+                <div>
+                    <header>ДОСТАВКА В ОТДАЛЕННЫЕ РАЙОНЫ:</header>
+                    <br>
+                    Возможность и стоимость доставки в
+                    отдаленные районы уточняйте у оператора
+                </div>
+            </div>
+        </div>
+        <style>
+            .container{
+                margin-top:150px;
+            }
+            .row{
+                color: #49433c!important;
+                font-weight: 550;
+            }
+            .iDiv{
+                display: flex;
+                flex-direction: row;
+            }
+            .iDiv div:last-child{
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+        </style>
+    </div>
 </div>
 </html>
