@@ -48,8 +48,11 @@
 .Logo:hover{
     color: white!important;
 }
-.LogIn{
+.bastketIMG{
     margin-left: auto;
+}
+.LogIn{
+    margin-left: 20px;
     transition: 0.5s;
 }
 .LogIn:hover{
