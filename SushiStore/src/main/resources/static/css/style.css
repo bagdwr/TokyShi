@@ -50,6 +50,12 @@
 }
 .bastketIMG{
     margin-left: auto;
+    display: flex;
+    align-items: center;
+}
+#basketCount{
+    font-size: 17px;
+    margin-right: 5px;
 }
 .LogIn{
     margin-left: 20px;

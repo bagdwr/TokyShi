@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import java.awt.*;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Map;
 
 @Controller
@@ -112,12 +111,11 @@ public class HomeController {
             Drinks drink=foodService.getOneDrink(drinkId);
             Map<Drinks,Integer> basketDrinks=basket.getDrinks();
             if (!basketDrinks.containsKey(drink)){
-                basketDrinks.put(drink,0);
+                basketDrinks.put(drink,1);
                 return "redirect:/drinks";
             }
             basketDrinks.put(drink,basketDrinks.get(drink)+1);
             basket.setDrinks(basketDrinks);
-            System.out.println(basket);
             return "redirect:/drinks";
         }
         return "redirect://";
@@ -128,7 +126,7 @@ public class HomeController {
             Sushi sushi=foodService.getOneSushi(sushiId);
             Map<Sushi,Integer>basketSushi=basket.getSushi();
             if (!basketSushi.containsKey(sushi)){
-                basketSushi.put(sushi,0);
+                basketSushi.put(sushi,1);
                 return "redirect:/sushi";
             }
             basketSushi.put(sushi,basketSushi.get(sushi)+1);
@@ -142,7 +140,7 @@ public class HomeController {
             Rolls rolls=foodService.getOneRolls(rollId);
             Map<Rolls,Integer>basketRolls=basket.getRolls();
             if (!basketRolls.containsKey(rolls)){
-                basketRolls.put(rolls,0);
+                basketRolls.put(rolls,1);
                 return "redirect:/rolls";
             }
             basketRolls.put(rolls,basketRolls.get(rolls)+1);
@@ -156,7 +154,7 @@ public class HomeController {
             Sets set=foodService.getOneSet(setId);
             Map<Sets,Integer>basketSets=basket.getSets();
             if (!basketSets.containsKey(set)){
-                basketSets.put(set,0);
+                basketSets.put(set,1);
                 return "redirect:/sets";
             }
             basketSets.put(set,basketSets.get(set)+1);
@@ -181,6 +179,13 @@ public class HomeController {
     public String showContactsPage(Model model){
         model.addAttribute("basketAmount",basket.getOverallAmount());
         return "footerPages/Contacts";
+    }
+
+    @GetMapping(value = "/basket")
+    public String showBasket(Model model){
+        model.addAttribute("basketItems",basket);
+        model.addAttribute("basketAmount",basket.getOverallAmount());
+        return "Basket";
     }
     @GetMapping(value = "/photo/{url}", produces ={MediaType.IMAGE_JPEG_VALUE})
     public @ResponseBody byte[] viewPicture(
