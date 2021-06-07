@@ -3,8 +3,6 @@ package com.example.SushiStore.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.List;
@@ -32,11 +30,10 @@ public class Sets{
     @Column(name = "price")
     private Integer price;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     private List<Sushi>sushiList;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @Fetch(FetchMode.SUBSELECT)
+    @ManyToMany(fetch = FetchType.LAZY)
     private List<Rolls>rollsList;
 
     public int getOverallPrice(int k){
