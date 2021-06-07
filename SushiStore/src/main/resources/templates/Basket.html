@@ -3,14 +3,124 @@
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
         layout:decorator="Layout/main.html">
 <div layout:fragment="site_cont">
-    <div>
-        <h1 th:text="${basketItems}"></h1>
+    <div class="container">
+        <div class="row basketFile">
+            <div class="col-12">
+                <div th:each="set:${basketItems.getSets()}" class="basketContainer">
+                    <div class="setFirstCol">
+                          <div class="basket_pre">
+                              <img th:src="@{'/photo/'+${set.getKey().getSet_picture()}}" class="item_picture" width="160px" height="160px">
+                          </div>
+                          <div class="basket_post">
+                              <h6 th:text="${set.getKey().getName()}"></h6>
+                              <p th:text="${set.getKey().getPrice()}+' ₸'"></p>
+                          </div>
+                    </div>
+                    <div class="setSecondCol">
+                           <div class="minusPlus">
+                               <form th:action="@{/minusSet}" method="post" >
+                                   <input type="hidden" name="set_id" th:value="${set.getKey().getId()}">
+                                   <input type="submit" value="-">
+                               </form>
+                               <p th:text="${set.getValue}"></p>
+                                <form th:action="@{/plusSet}" method="post">
+                                    <input type="hidden" name="set_id" th:value="${set.getKey().getId()}">
+                                    <input type="submit" value="+">
+                                </form>
+                           </div>
+                           <div class="setsPrice">
+                               <p th:text="${set.getKey().getOverallPrice(set.getValue())}+' ₸'"></p>
+                           </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <style>
-        h1{
-            text-align: center;
-            margin-top: 300px;
+        .basketFile{
+            margin-top: 100px;
         }
+        .basketContainer{
+            margin-bottom: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 6px 0 #d6d6d1;
+            padding: 24px 30px;
+            display: flex;
+            flex-direction: row;
+        }
+        .setFirstCol{
+            display: flex;
+            flex-direction: row;
+            width: 50%;
+        }
+        .basket_pre{
+            margin-left: 30px;
+        }
+        .basket_post{
+            display: flex;
+            flex-direction: column;
+            margin-left: auto;
+            margin-right: auto;
+            justify-content: center;
+            width: 35%;
+        }
+        .basket_post h1{
+            font-size: 17px;
+            color: #49433c;
+            font-weight: 500;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .basket_post p{
+            font-family: 'Roboto', sans-serif;
+            color: #49433c;
+            font-weight: 600;
+            font-size: 25px;
+        }
+        .setSecondCol{
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+        }
+        .minusPlus{
+            display: flex;
+            flex-direction:row;
+            align-items: center;
+            justify-content: center;
+            width: 50%;
+            margin: 0 auto;
+            height: 100%;
+        }
+        .minusPlus form{
+            display: block;
+        }
+        .minusPlus p{
+            color: #49433c;
+            font-size: 40px;
+            margin: 0px 10px;
+        }
+        .minusPlus form input{
+            background: 0;
+            font-size: 20px;
+            border-radius: 30px;
+            border: 2px solid #006F48;
+            color: #006F48;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-content: center;
+        }
+        .setsPrice{
+            font-family: 'Roboto', sans-serif;
+            color: #006F48;
+            font-weight: 600;
+            font-size: 25px;
+            margin-top: 0;
+            display: block;
+            text-align: center;
+        }
+
     </style>
 </div>
 </html>

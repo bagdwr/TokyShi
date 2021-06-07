@@ -39,6 +39,9 @@ public class Sets{
     @Fetch(FetchMode.SUBSELECT)
     private List<Rolls>rollsList;
 
+    public int getOverallPrice(int k){
+        return k*this.price;
+    }
     public String getItems(){
         String s="";
         if (!this.sushiList.isEmpty() && !this.rollsList.isEmpty()){
