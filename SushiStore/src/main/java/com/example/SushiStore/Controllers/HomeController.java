@@ -153,11 +153,17 @@ public class HomeController {
         if (setId!=null){
             Sets set=foodService.getOneSet(setId);
             Map<Sets,Integer>basketSets=basket.getSets();
-            if (!basketSets.containsKey(set)){
-                basketSets.put(set,1);
-                return "redirect:/sets";
+            for(Map.Entry<Sets,Integer>s:basketSets.entrySet()){
+                if (s.getKey().hashCode()==set.hashCode()){
+                    if (s.getKey().equals(set)){
+                        basketSets.put(set,basketSets.get(set)+1);
+                        basket.setSets(basketSets);
+                        return "redirect:/sets";
+                    }
+                }
             }
-            basketSets.put(set,basketSets.get(set)+1);
+            basketSets.put(set,1);
+            basket.setSets(basketSets);
             return "redirect:/sets";
         }
         return "redirect://";

@@ -6,7 +6,7 @@
     <div class="container">
         <div class="row basketFile">
             <div class="col-12">
-                <div th:each="set:${basketItems.getSets()}" class="basketContainer">
+                <div th:each="set:${basketItems.getSets().entrySet()}" class="basketContainer">
                     <div class="setFirstCol">
                           <div class="basket_pre">
                               <img th:src="@{'/photo/'+${set.getKey().getSet_picture()}}" class="item_picture" width="160px" height="160px">
@@ -31,9 +31,37 @@
                            <div class="setsPrice">
                                <p th:text="${set.getKey().getOverallPrice(set.getValue())}+' ₸'"></p>
                            </div>
-
                     </div>
                 </div>
+
+                <div th:each="roll:${basketItems.getRolls().entrySet()}" class="basketContainer">
+                    <div class="setFirstCol">
+                        <div class="basket_pre">
+                            <img th:src="@{'/photo/'+${roll.getKey().getUrl()}}" class="item_picture" width="160px" height="160px">
+                        </div>
+                        <div class="basket_post">
+                            <h6 th:text="${roll.getKey().getName()}"></h6>
+                            <p th:text="${roll.getKey().getPrice()}+' ₸'"></p>
+                        </div>
+                    </div>
+                    <div class="setSecondCol">
+                        <div class="minusPlus">
+                            <form th:action="@{/minusRoll}" method="post" >
+                                <input type="hidden" name="set_id" th:value="${roll.getKey().getId()}">
+                                <input type="submit" value="-">
+                            </form>
+                            <p th:text="${roll.getValue}"></p>
+                            <form th:action="@{/plusRoll}" method="post">
+                                <input type="hidden" name="set_id" th:value="${roll.getKey().getId()}">
+                                <input type="submit" value="+">
+                            </form>
+                        </div>
+                        <div class="setsPrice">
+                            <p th:text="${roll.getKey().getOverallPrice(roll.getValue())}+' ₸'"></p>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>

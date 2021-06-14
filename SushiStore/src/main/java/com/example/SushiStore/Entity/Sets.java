@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Data
@@ -81,5 +82,18 @@ public class Sets{
         }
         s=s+" /"+amount+"шт";
         return s;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Sets sets = (Sets) o;
+        return Objects.equals(id, sets.id) && Objects.equals(name, sets.name) && Objects.equals(set_picture, sets.set_picture) && Objects.equals(amount, sets.amount) && Objects.equals(price, sets.price) && Objects.equals(sushiList, sets.sushiList) && Objects.equals(rollsList, sets.rollsList);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, set_picture, amount, price, sushiList, rollsList);
     }
 }

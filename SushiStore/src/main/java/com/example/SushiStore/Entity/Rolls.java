@@ -46,4 +46,8 @@ public class Rolls{
         s=s+" /"+this.amount+"шт";
         return s;
     }
+
+    public int getOverallPrice(int k){
+        return k*this.price;
+    }
 }
