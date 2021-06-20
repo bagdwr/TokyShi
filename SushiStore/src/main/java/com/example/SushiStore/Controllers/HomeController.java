@@ -130,6 +130,7 @@ public class HomeController {
                 return "redirect:/sushi";
             }
             basketSushi.put(sushi,basketSushi.get(sushi)+1);
+            basket.setSushi(basketSushi);
             return "redirect:/sushi";
         }
         return "redirect://";
@@ -137,13 +138,14 @@ public class HomeController {
     @PostMapping(value = "/addRollToBasket")
     public String addRoll(@RequestParam(name = "item_roll")Long rollId){
         if (rollId!=null){
-            Rolls rolls=foodService.getOneRolls(rollId);
+            Rolls roll=foodService.getOneRolls(rollId);
             Map<Rolls,Integer>basketRolls=basket.getRolls();
-            if (!basketRolls.containsKey(rolls)){
-                basketRolls.put(rolls,1);
+            if (!basketRolls.containsKey(roll)){
+                basketRolls.put(roll,1);
                 return "redirect:/rolls";
             }
-            basketRolls.put(rolls,basketRolls.get(rolls)+1);
+            basketRolls.put(roll,basketRolls.get(roll)+1);
+            basket.setRolls(basketRolls);
             return "redirect:/rolls";
         }
         return "redirect://";
@@ -152,19 +154,16 @@ public class HomeController {
     public String addSet(@RequestParam(name = "item_set")Long setId){
         if (setId!=null){
             Sets set=foodService.getOneSet(setId);
-            Map<Sets,Integer>basketSets=basket.getSets();
-            for(Map.Entry<Sets,Integer>s:basketSets.entrySet()){
-                if (s.getKey().hashCode()==set.hashCode()){
-                    if (s.getKey().equals(set)){
-                        basketSets.put(set,basketSets.get(set)+1);
-                        basket.setSets(basketSets);
-                        return "redirect:/sets";
-                    }
+            if (set!=null){
+                Map<Sets,Integer>basketSets=basket.getSets();
+                if(!basketSets.containsKey(set)){
+                    basketSets.put(set,1);
+                    return "redirect:/sets";
                 }
+                basketSets.put(set,basketSets.get(set)+1);
+                basket.setSets(basketSets);
+                return "redirect:/sets";
             }
-            basketSets.put(set,1);
-            basket.setSets(basketSets);
-            return "redirect:/sets";
         }
         return "redirect://";
     }

@@ -87,13 +87,13 @@ public class Sets{
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Sets)) return false;
         Sets sets = (Sets) o;
-        return Objects.equals(id, sets.id) && Objects.equals(name, sets.name) && Objects.equals(set_picture, sets.set_picture) && Objects.equals(amount, sets.amount) && Objects.equals(price, sets.price) && Objects.equals(sushiList, sets.sushiList) && Objects.equals(rollsList, sets.rollsList);
+        return getId().equals(sets.getId()) && getName().equals(sets.getName()) && getSet_picture().equals(sets.getSet_picture()) && getAmount().equals(sets.getAmount()) && getPrice().equals(sets.getPrice()) && getSushiList().equals(sets.getSushiList()) && getRollsList().equals(sets.getRollsList());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, set_picture, amount, price, sushiList, rollsList);
+        return Objects.hash(getId(), getName(), getSet_picture(), getAmount(), getPrice(), getSushiList(), getRollsList());
     }
 }

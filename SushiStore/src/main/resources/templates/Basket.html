@@ -6,58 +6,114 @@
     <div class="container">
         <div class="row basketFile">
             <div class="col-12">
-                <div th:each="set:${basketItems.getSets().entrySet()}" class="basketContainer">
-                    <div class="setFirstCol">
-                          <div class="basket_pre">
-                              <img th:src="@{'/photo/'+${set.getKey().getSet_picture()}}" class="item_picture" width="160px" height="160px">
-                          </div>
-                          <div class="basket_post">
-                              <h6 th:text="${set.getKey().getName()}"></h6>
-                              <p th:text="${set.getKey().getPrice()}+' ₸'"></p>
-                          </div>
-                    </div>
-                    <div class="setSecondCol">
-                           <div class="minusPlus">
-                               <form th:action="@{/minusSet}" method="post" >
-                                   <input type="hidden" name="set_id" th:value="${set.getKey().getId()}">
-                                   <input type="submit" value="-">
-                               </form>
-                               <p th:text="${set.getValue}"></p>
-                                <form th:action="@{/plusSet}" method="post">
-                                    <input type="hidden" name="set_id" th:value="${set.getKey().getId()}">
-                                    <input type="submit" value="+">
-                                </form>
-                           </div>
-                           <div class="setsPrice">
-                               <p th:text="${set.getKey().getOverallPrice(set.getValue())}+' ₸'"></p>
-                           </div>
-                    </div>
-                </div>
+<!--                <div th:each="set:${basketItems.getSets()}" class="basketContainer">-->
+<!--                    <div class="setFirstCol">-->
+<!--                          <div class="basket_pre">-->
+<!--                              <img th:src="@{'/photo/'+${set.getKey().getSet_picture()}}" class="item_picture" width="160px" height="160px">-->
+<!--                          </div>-->
+<!--                          <div class="basket_post">-->
+<!--                              <h6 th:text="${set.getKey().getName()}"></h6>-->
+<!--                              <p th:text="${set.getKey().getPrice()}+' ₸'"></p>-->
+<!--                          </div>-->
+<!--                    </div>-->
+<!--                    <div class="setSecondCol">-->
+<!--                           <div class="minusPlus">-->
+<!--                               <form th:action="@{/minusSet}" method="post" >-->
+<!--                                   <input type="hidden" name="set_id" th:value="${set.getKey().getId()}">-->
+<!--                                   <input type="submit" value="-">-->
+<!--                               </form>-->
+<!--                               <p th:text="${set.getValue}"></p>-->
+<!--                                <form th:action="@{/plusSet}" method="post">-->
+<!--                                    <input type="hidden" name="set_id" th:value="${set.getKey().getId()}">-->
+<!--                                    <input type="submit" value="+">-->
+<!--                                </form>-->
+<!--                           </div>-->
+<!--                           <div class="setsPrice">-->
+<!--                               <p th:text="${set.getKey().getOverallPrice(set.getValue())}+' ₸'"></p>-->
+<!--                           </div>-->
+<!--                    </div>-->
+<!--                </div>-->
 
-                <div th:each="roll:${basketItems.getRolls().entrySet()}" class="basketContainer">
+<!--                <div th:each="roll:${basketItems.getRolls()}" class="basketContainer">-->
+<!--                    <div class="setFirstCol">-->
+<!--                        <div class="basket_pre">-->
+<!--                            <img th:src="@{'/photo/'+${roll.getKey().getUrl()}}" class="item_picture" width="160px" height="160px">-->
+<!--                        </div>-->
+<!--                        <div class="basket_post">-->
+<!--                            <h6 th:text="${roll.getKey().getName()}"></h6>-->
+<!--                            <p th:text="${roll.getKey().getPrice()}+' ₸'"></p>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="setSecondCol">-->
+<!--                        <div class="minusPlus">-->
+<!--                            <form th:action="@{/minusRoll}" method="post" >-->
+<!--                                <input type="hidden" name="roll_id" th:value="${roll.getKey().getId()}">-->
+<!--                                <input type="submit" value="-">-->
+<!--                            </form>-->
+<!--                            <p th:text="${roll.getValue}"></p>-->
+<!--                            <form th:action="@{/plusRoll}" method="post">-->
+<!--                                <input type="hidden" name="roll_id" th:value="${roll.getKey().getId()}">-->
+<!--                                <input type="submit" value="+">-->
+<!--                            </form>-->
+<!--                        </div>-->
+<!--                        <div class="setsPrice">-->
+<!--                            <p th:text="${roll.getKey().getOverallPrice(roll.getValue())}+' ₸'"></p>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+<!--                <div th:each="sushi:${basketItems.getSushi()}" class="basketContainer">-->
+<!--                    <div class="setFirstCol">-->
+<!--                        <div class="basket_pre">-->
+<!--                            <img th:src="@{'/photo/'+${sushi.getKey().getSushi_picture()}}" class="item_picture" width="160px" height="160px">-->
+<!--                        </div>-->
+<!--                        <div class="basket_post">-->
+<!--                            <h6 th:text="${sushi.getKey().getName()}"></h6>-->
+<!--                            <p th:text="${sushi.getKey().getPrice()}+' ₸'"></p>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="setSecondCol">-->
+<!--                        <div class="minusPlus">-->
+<!--                            <form th:action="@{/minusSushi}" method="post" >-->
+<!--                                <input type="hidden" name="sushi_id" th:value="${sushi.getKey().getId()}">-->
+<!--                                <input type="submit" value="-">-->
+<!--                            </form>-->
+<!--                            <p th:text="${sushi.getValue}"></p>-->
+<!--                            <form th:action="@{/plusSushi}" method="post">-->
+<!--                                <input type="hidden" name="sushi_id" th:value="${sushi.getKey().getId()}">-->
+<!--                                <input type="submit" value="+">-->
+<!--                            </form>-->
+<!--                        </div>-->
+<!--                        <div class="setsPrice">-->
+<!--                            <p th:text="${sushi.getKey().getOverallPrice(sushi.getValue())}+' ₸'"></p>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+                <div th:each="drink:${basketItems.getDrinks()}" class="basketContainer">
                     <div class="setFirstCol">
                         <div class="basket_pre">
-                            <img th:src="@{'/photo/'+${roll.getKey().getUrl()}}" class="item_picture" width="160px" height="160px">
+                            <img th:src="@{'/photo/'+${drink.getKey().getDrink_picture()}}" class="item_picture" width="160px" height="160px">
                         </div>
                         <div class="basket_post">
-                            <h6 th:text="${roll.getKey().getName()}"></h6>
-                            <p th:text="${roll.getKey().getPrice()}+' ₸'"></p>
+                            <h6 th:text="${drink.getKey().getName()}"></h6>
+                            <p th:text="${drink.getKey().getPrice()}+' ₸'"></p>
                         </div>
                     </div>
                     <div class="setSecondCol">
                         <div class="minusPlus">
-                            <form th:action="@{/minusRoll}" method="post" >
-                                <input type="hidden" name="set_id" th:value="${roll.getKey().getId()}">
+                            <form th:action="@{/minusDrink}" method="post" >
+                                <input type="hidden" name="drink_id" th:value="${drink.getKey().getId()}">
                                 <input type="submit" value="-">
                             </form>
-                            <p th:text="${roll.getValue}"></p>
-                            <form th:action="@{/plusRoll}" method="post">
-                                <input type="hidden" name="set_id" th:value="${roll.getKey().getId()}">
+                            <p th:text="${drink.getValue}"></p>
+                            <form th:action="@{/plusDrink}" method="post">
+                                <input type="hidden" name="drink_id" th:value="${drink.getKey().getId()}">
                                 <input type="submit" value="+">
                             </form>
                         </div>
                         <div class="setsPrice">
-                            <p th:text="${roll.getKey().getOverallPrice(roll.getValue())}+' ₸'"></p>
+                            <p th:text="${drink.getKey().getOverallPrice(drink.getValue())}+' ₸'"></p>
                         </div>
                     </div>
                 </div>
@@ -148,7 +204,6 @@
             display: block;
             text-align: center;
         }
-
     </style>
 </div>
 </html>

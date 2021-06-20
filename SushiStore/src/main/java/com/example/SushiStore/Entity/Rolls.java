@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Data
@@ -49,5 +50,18 @@ public class Rolls{
 
     public int getOverallPrice(int k){
         return k*this.price;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Rolls)) return false;
+        Rolls rolls = (Rolls) o;
+        return getId().equals(rolls.getId()) && getName().equals(rolls.getName()) && getUrl().equals(rolls.getUrl()) && getIngredients().equals(rolls.getIngredients()) && getAmount().equals(rolls.getAmount()) && getPrice().equals(rolls.getPrice());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getName(), getUrl(), getIngredients(), getAmount(), getPrice());
     }
 }
