@@ -102,12 +102,12 @@
                     </div>
                     <div class="setSecondCol">
                         <div class="minusPlus">
-                            <form th:action="@{/minusDrink}" method="post" >
+                            <form th:action="@{'/minusDrink'}" method="post" >
                                 <input type="hidden" name="drink_id" th:value="${drink.getKey().getId()}">
                                 <input type="submit" value="-">
                             </form>
                             <p th:text="${drink.getValue}"></p>
-                            <form th:action="@{/plusDrink}" method="post">
+                            <form th:action="@{'/plusDrink'}" method="post">
                                 <input type="hidden" name="drink_id" th:value="${drink.getKey().getId()}">
                                 <input type="submit" value="+">
                             </form>

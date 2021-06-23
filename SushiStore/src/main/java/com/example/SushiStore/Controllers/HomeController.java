@@ -192,6 +192,44 @@ public class HomeController {
         model.addAttribute("basketAmount",basket.getOverallAmount());
         return "Basket";
     }
+
+    //region plus and minus drinkBasket
+    @PostMapping(value = "/plusDrink")
+    public String incDrink(
+            @RequestParam(name = "drink_id")Long id
+    ){
+        if (id!=null){
+            Drinks drink=foodService.getOneDrink(id);
+            if (drink!=null){
+                Map<Drinks,Integer>drinksMap=basket.getDrinks();
+                drinksMap.put(drink,drinksMap.get(drink)+1);
+                basket.setDrinks(drinksMap);
+                return "redirect:/basket";
+            }
+        }
+        return "redirect:/Error";
+    }
+
+    @PostMapping(value = "/minusDrink")
+    public String decDrink(
+            @RequestParam(name = "drink_id")Long id
+    ){
+        if (id!=null){
+            Drinks drink=foodService.getOneDrink(id);
+            if (drink!=null){
+                Map<Drinks,Integer>drinksMap=basket.getDrinks();
+                if (drinksMap.containsKey(drink)&& drinksMap.get(drink)==1)
+                    drinksMap.remove(drink);
+                else
+                    drinksMap.put(drink,drinksMap.get(drink)-1);
+                basket.setDrinks(drinksMap);
+                return "redirect:/basket";
+            }
+        }
+        return "redirect:/Error";
+    }
+    //endregion
+
     @GetMapping(value = "/photo/{url}", produces ={MediaType.IMAGE_JPEG_VALUE})
     public @ResponseBody byte[] viewPicture(
             @PathVariable(name = "url")String path
