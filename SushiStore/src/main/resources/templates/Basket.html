@@ -4,6 +4,11 @@
         layout:decorator="Layout/main.html">
 <div layout:fragment="site_cont">
     <div class="container">
+        <div class="row clearBasket">
+             <div class="col-12">
+                   <a th:href="@{'/clearBasket'}" class="btn btn-light">Очистить всё</a>
+             </div>
+        </div>
         <div class="row basketFile">
             <div class="col-12">
 <!--                <div th:each="set:${basketItems.getSets()}" class="basketContainer">-->
@@ -123,7 +128,7 @@
     </div>
     <style>
         .basketFile{
-            margin-top: 100px;
+            margin-top: 20px;
         }
         .basketContainer{
             margin-bottom: 20px;
@@ -203,6 +208,10 @@
             margin-top: 0;
             display: block;
             text-align: center;
+        }
+        .clearBasket{
+            margin-top: 130px;
+            text-align: right;
         }
     </style>
 </div>

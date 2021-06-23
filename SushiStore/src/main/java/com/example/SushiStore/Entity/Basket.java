@@ -33,4 +33,14 @@ public class Basket {
         }
         return sum;
     }
+    public void clearBasket(){
+        drinks=new HashMap<>();
+        rolls=new HashMap<>();
+        sets=new HashMap<>();
+        sushi=new HashMap<>();
+    }
+
+    public Boolean checkEmpty(){
+        return (rolls.isEmpty() && sushi.isEmpty() && sets.isEmpty() && drinks.isEmpty());
+    }
 }

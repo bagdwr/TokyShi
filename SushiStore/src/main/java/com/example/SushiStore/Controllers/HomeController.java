@@ -188,9 +188,13 @@ public class HomeController {
 
     @GetMapping(value = "/basket")
     public String showBasket(Model model){
-        model.addAttribute("basketItems",basket);
-        model.addAttribute("basketAmount",basket.getOverallAmount());
-        return "Basket";
+        if (basket.checkEmpty()){
+            return "BasketEmpty";
+        }else {
+            model.addAttribute("basketItems", basket);
+            model.addAttribute("basketAmount", basket.getOverallAmount());
+            return "Basket";
+        }
     }
 
     //region plus and minus drinkBasket
@@ -230,6 +234,11 @@ public class HomeController {
     }
     //endregion
 
+    @GetMapping(value = "/clearBasket")
+    public String clearBasket(){
+        basket.clearBasket();
+        return "redirect:/basket";
+    }
     @GetMapping(value = "/photo/{url}", produces ={MediaType.IMAGE_JPEG_VALUE})
     public @ResponseBody byte[] viewPicture(
             @PathVariable(name = "url")String path
