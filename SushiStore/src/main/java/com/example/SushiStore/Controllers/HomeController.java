@@ -193,6 +193,7 @@ public class HomeController {
         }else {
             model.addAttribute("basketItems", basket);
             model.addAttribute("basketAmount", basket.getOverallAmount());
+            model.addAttribute("basketPrice", basket.getOverallPrice());
             return "Basket";
         }
     }
@@ -239,6 +240,13 @@ public class HomeController {
         basket.clearBasket();
         return "redirect:/basket";
     }
+
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping(value = "/makeOrder")
+    public String makeOrder(){
+        return "redirect:/";
+    }
+
     @GetMapping(value = "/photo/{url}", produces ={MediaType.IMAGE_JPEG_VALUE})
     public @ResponseBody byte[] viewPicture(
             @PathVariable(name = "url")String path

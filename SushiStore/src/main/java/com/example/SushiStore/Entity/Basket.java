@@ -33,6 +33,22 @@ public class Basket {
         }
         return sum;
     }
+    public int getOverallPrice(){
+        int sum=0;
+        for(Map.Entry<Drinks,Integer>d:drinks.entrySet()){
+            sum=sum+d.getKey().getOverallPrice(d.getValue());
+        }
+        for(Map.Entry<Rolls,Integer>r:rolls.entrySet()){
+            sum=sum+r.getKey().getOverallPrice(r.getValue());
+        }
+        for(Map.Entry<Sets,Integer>s:sets.entrySet()){
+            sum=sum+s.getKey().getOverallPrice(s.getValue());
+        }
+        for(Map.Entry<Sushi,Integer>s:sushi.entrySet()){
+            sum=sum+s.getKey().getOverallPrice(s.getValue());
+        }
+        return sum;
+    }
     public void clearBasket(){
         drinks=new HashMap<>();
         rolls=new HashMap<>();

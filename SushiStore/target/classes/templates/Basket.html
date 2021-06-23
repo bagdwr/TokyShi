@@ -1,6 +1,7 @@
 <html
         xmlns:th="https://www.thymeleaf.org"
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
         layout:decorator="Layout/main.html">
 <div layout:fragment="site_cont">
     <div class="container">
@@ -122,7 +123,19 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
 
+        <div class="row makeOrder">
+            <div class="col-12 ">
+                <form th:action="@{'/makeOrder'}" method="post">
+                     <input type="hidden" name="order" th:value="${basketItems}">
+                    <button type="submit" class="btn-danger">Оформить заказ</button>
+                </form>
+                <p class="greenP">
+                    Итого:
+                    <span th:text="${basketPrice}+' ₸'"></span>
+                </p>
             </div>
         </div>
     </div>
@@ -210,8 +223,38 @@
             text-align: center;
         }
         .clearBasket{
-            margin-top: 100px;
+            margin-top: 130px;
             text-align: right;
+        }
+        .clearBasket a{
+            font-size: 15px;
+            font-weight: 600;
+            border-radius: 10px;
+        }
+        .makeOrder div{
+            display: flex;
+            justify-content: space-between;
+        }
+        .makeOrder{
+            margin-top: 20px;
+        }
+        .makeOrder button{
+            width: 200px;
+            border: 0px;
+            font-size: 15px;
+            font-weight: 600;
+            padding: 10px 14px;
+            border-radius: 10px;
+            transition: 0.3s;
+        }
+        .greenP{
+            font-size: 20px;
+        }
+        .greenP span{
+            font-family: 'Roboto', sans-serif;
+            color: #006F48;
+            font-size: 25px;
+            font-weight: 600;
         }
     </style>
 </div>
