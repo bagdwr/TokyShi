@@ -244,8 +244,27 @@ public class HomeController {
     @PreAuthorize("isAuthenticated()")
     @PostMapping(value = "/makeOrder")
     public String makeOrder(){
+        return "redirect:/basket";
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping(value = "/order")
+    public String orderHandler(
+            @RequestParam(name = "basket")Basket basket,
+            @RequestParam(name = "client_name")String client_name,
+            @RequestParam(name = "phone")String phone,
+            @RequestParam(name = "street")String street,
+            @RequestParam(name = "house")String house,
+            @RequestParam(name = "entrance")String entrance,
+            @RequestParam(name = "floor")Integer floor,
+            @RequestParam(name = "flat")Integer flat,
+            @RequestParam(name = "commentary")String commentary
+    ){
+
+
         return "redirect:/";
     }
+
 
     @GetMapping(value = "/photo/{url}", produces ={MediaType.IMAGE_JPEG_VALUE})
     public @ResponseBody byte[] viewPicture(

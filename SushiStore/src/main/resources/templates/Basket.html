@@ -128,14 +128,66 @@
 
         <div class="row makeOrder">
             <div class="col-12 ">
-                <form th:action="@{'/makeOrder'}" method="post">
-                     <input type="hidden" name="order" th:value="${basketItems}">
-                    <button type="submit" class="btn-danger">Оформить заказ</button>
+                <form th:action="@{'/makeOrder'}" method="post" sec:authorize="isAnonymous()">
+                     <button type="submit" class="btn-danger orderButton">Оформить заказ</button>
                 </form>
+                <button type="button" class="btn btn-danger orderButton" data-toggle="modal" data-target="#makeOrder" sec:authorize="isAnonymous()">
+                    Оформить заказ
+                </button>
                 <p class="greenP">
                     Итого:
                     <span th:text="${basketPrice}+' ₸'"></span>
                 </p>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="makeOrder" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Заказ</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form th:action="@{'/order'}" method="post">
+                    <div class="modal-body">
+                             <input type="hidden" name="basket" th:value="${basketItems}">
+                             <div class="form-group mt-3">
+                                 <input type="text" value="Уральск"  class="form-control" readonly>
+                             </div>
+                             <div class="form-group mt-3">
+                                  <input type="text" name="client_name" class="form-control" placeholder="Имя" required>
+                             </div>
+                             <div class="form-group mt-3">
+                                  <input type="text" name="phone" class="form-control" placeholder="+7" required>
+                             </div>
+                             <div class="form-group mt-3">
+                                 <input type="text" name="street" class="form-control" placeholder="Улица" required>
+                             </div>
+                             <div class="form-group mt-3">
+                                 <input type="text" name="house" class="form-control" placeholder="Дом" required>
+                             </div>
+                             <div class="form-group mt-3">
+                                 <input type="text" name="entrance" class="form-control" placeholder="Подъезд">
+                             </div>
+                             <div class="form-group mt-3">
+                                 <input type="number" name="floor" class="form-control" placeholder="Этаж">
+                             </div>
+                             <div class="form-group mt-3">
+                                 <input type="number" name="flat" class="form-control" placeholder="Квартира">
+                             </div>
+                            <div class="form-group mt-3">
+                                 <input type="text" name="commentary" class="form-control" placeholder="Комментарий к заказу(сдача с)">
+                            </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                        <button type="submit" class="btn btn-danger">Заказать</button>
+                    </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
@@ -238,9 +290,9 @@
         .makeOrder{
             margin-top: 20px;
         }
-        .makeOrder button{
+        .orderButton{
             width: 200px;
-            border: 0px;
+            border: 0px!important;
             font-size: 15px;
             font-weight: 600;
             padding: 10px 14px;
