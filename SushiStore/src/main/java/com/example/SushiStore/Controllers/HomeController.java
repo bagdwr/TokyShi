@@ -2,6 +2,7 @@ package com.example.SushiStore.Controllers;
 
 import com.example.SushiStore.Entity.*;
 import com.example.SushiStore.Service.FoodService;
+import com.example.SushiStore.Service.OrderService;
 import com.example.SushiStore.Service.UserService;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,9 @@ public class HomeController {
 
     @Autowired
     private FoodService foodService;
+
+    @Autowired
+    private OrderService orderService;
 
     @Value("${file.picture.defaultPicture}")
     private String defaultPicture;
@@ -250,7 +254,7 @@ public class HomeController {
     @PreAuthorize("isAuthenticated()")
     @PostMapping(value = "/order")
     public String orderHandler(
-            @RequestParam(name = "basket")Basket basket,
+
             @RequestParam(name = "client_name")String client_name,
             @RequestParam(name = "phone")String phone,
             @RequestParam(name = "street")String street,
@@ -260,9 +264,15 @@ public class HomeController {
             @RequestParam(name = "flat")Integer flat,
             @RequestParam(name = "commentary")String commentary
     ){
-
-
-        return "redirect:/";
+        if (client_name!=null && phone!=null && street!=null && house!=null){
+            // Users user=getUser()
+            //saveBasket
+            Order order=new Order(null,client_name,phone,street,house,entrance,floor,flat,commentary);
+            orderService.createOrder(order);
+            basket.clearBasket();
+            return "redirect:/sushi";
+        }
+        return "redirect:/?somethingWrong";
     }
 
 

@@ -3,6 +3,7 @@ package com.example.SushiStore.Controllers;
 import com.example.SushiStore.Entity.*;
 import com.example.SushiStore.Repositories.RoleRepository;
 import com.example.SushiStore.Service.FoodService;
+import com.example.SushiStore.Service.OrderService;
 import com.example.SushiStore.Service.UserService;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.IOUtils;
@@ -37,6 +38,9 @@ public class AdminController {
 
     @Autowired
     private FoodService foodService;
+
+    @Autowired
+    private OrderService orderService;
 
     @Value("${file.picture.defaultPicture}")
     private String defaultPicture;

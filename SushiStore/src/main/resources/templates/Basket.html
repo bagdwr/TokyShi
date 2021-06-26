@@ -131,7 +131,7 @@
                 <form th:action="@{'/makeOrder'}" method="post" sec:authorize="isAnonymous()">
                      <button type="submit" class="btn-danger orderButton">Оформить заказ</button>
                 </form>
-                <button type="button" class="btn btn-danger orderButton" data-toggle="modal" data-target="#makeOrder" sec:authorize="isAnonymous()">
+                <button type="button" class="btn btn-danger orderButton" data-toggle="modal" data-target="#makeOrder" sec:authorize="isAuthenticated()"  style="height: 42px;">
                     Оформить заказ
                 </button>
                 <p class="greenP">
