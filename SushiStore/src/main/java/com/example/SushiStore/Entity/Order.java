@@ -1,5 +1,6 @@
 package com.example.SushiStore.Entity;
 
+import com.sun.istack.Nullable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -31,16 +32,20 @@ public class Order  {
     private String house;
 
     @Column(name = "entrance")
+    @Nullable
     private String entrance;
 
     @Column(name = "floor")
-    private Integer floor;
+    private String floor;
 
     @Column(name = "flat")
-    private Integer flat;
+    private String flat;
 
     @Column(name = "commentary")
     private String commentary;
+
+    @Column(name = "price")
+    private Integer overallPrice;
 
 //    @Column(name = "client")
 //    private Users user;

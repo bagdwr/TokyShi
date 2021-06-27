@@ -260,14 +260,32 @@ public class HomeController {
             @RequestParam(name = "street")String street,
             @RequestParam(name = "house")String house,
             @RequestParam(name = "entrance")String entrance,
-            @RequestParam(name = "floor")Integer floor,
-            @RequestParam(name = "flat")Integer flat,
+            @RequestParam(name = "floor")String floor,
+            @RequestParam(name = "flat")String flat,
             @RequestParam(name = "commentary")String commentary
     ){
         if (client_name!=null && phone!=null && street!=null && house!=null){
             // Users user=getUser()
             //saveBasket
-            Order order=new Order(null,client_name,phone,street,house,entrance,floor,flat,commentary);
+            Order order=new Order();
+            order.setName(client_name);
+            order.setStreet(street);
+            order.setPhone(phone);
+            if (house==null && entrance==null && floor==null && flat==null){
+                house=null;
+                entrance=null;
+                floor=null;
+                flat=null;
+                if (commentary==null){
+                    commentary=null;
+                }
+            }
+            order.setHouse(house);
+            order.setEntrance(entrance);
+            order.setFloor(floor);
+            order.setFlat(flat);
+            order.setCommentary(commentary);
+            order.setOverallPrice(basket.getOverallPrice());
             orderService.createOrder(order);
             basket.clearBasket();
             return "redirect:/sushi";
