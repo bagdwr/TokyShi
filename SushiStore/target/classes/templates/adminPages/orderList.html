@@ -1,0 +1,45 @@
+<html   xmlns:th="https://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+        layout:decorator="Layout/admin.html">
+<div layout:fragment="right_content">
+    <div class="container">
+        <div class="row">
+            <div class="col sm-6">
+                <table  class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Имя</th>
+                        <th>Номер</th>
+                        <th>Улица</th>
+                        <th>Дом</th>
+                        <th>Цена</th>
+                        <th>Комментарий</th>
+                        <th>Редактировать</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="order:${orders}">
+                        <th th:text="${order.getName()}"></th>
+                        <th th:text="${order.getPhone()}"></th>
+                        <th th:text="${order.getStreet()}"></th>
+                        <th th:text="${order.getHouse()}"></th>
+                        <th th:text="${order.getOverallPrice()}+' ₸'"></th>
+                        <th th:text="${order.getCommentary()}"></th>
+                        <th>
+                            <a th:href="@{'/admin/orderEdit/'+${order.getId()}}" class="btn btn-info btn-sm">Редактировать</a>
+                        </th>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <style sec:authorize="hasRole('ROLE_ADMIN')">
+                .rightContent{
+                    margin:0!important;
+                    width: 100%;
+                }
+            </style>
+        </div>
+    </div>
+</div>
+</html>

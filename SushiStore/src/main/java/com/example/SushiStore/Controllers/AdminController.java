@@ -7,6 +7,7 @@ import com.example.SushiStore.Service.OrderService;
 import com.example.SushiStore.Service.UserService;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.IOUtils;
+import org.dom4j.rule.Mode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
@@ -886,6 +887,13 @@ public class AdminController {
     }
     //endregion
 
+    @GetMapping(value = "/showOrders")
+    public String showOrders(
+            Model model
+    ){
+        model.addAttribute("orders",orderService.getAllOrders());
+        return "adminPages/orderList";
+    }
     @GetMapping(value = "/viewphoto/{url}",produces = {MediaType.IMAGE_JPEG_VALUE})
     public @ResponseBody byte[] viewPicture(
             @PathVariable(name = "url") String url

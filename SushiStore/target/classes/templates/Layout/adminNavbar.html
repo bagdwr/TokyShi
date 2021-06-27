@@ -7,25 +7,25 @@
      </div>
     <ul class="toggleMenu">
         <li  sec:authorize="hasRole('ROLE_ADMIN')">
-            <a th:href="@{/admin/showusers}">Пользователи</a>
+            <a th:href="@{'/admin/showusers'}">Пользователи</a>
         </li>
         <li>
-            <a th:href="@{/admin/adminSushi}">Суши</a>
+            <a th:href="@{'/admin/adminSushi'}">Суши</a>
         </li>
         <li>
-            <a th:href="@{/admin/adminRolls}">Роллы</a>
+            <a th:href="@{'/admin/adminRolls'}">Роллы</a>
         </li>
         <li>
-            <a th:href="@{/admin/adminSets}">Сеты</a>
+            <a th:href="@{'/admin/adminSets'}">Сеты</a>
         </li>
         <li>
-            <a th:href="@{/admin/drinksList}">Напитки</a>
+            <a th:href="@{'/admin/drinksList'}">Напитки</a>
         </li>
         <li>
-            <a th:href="@{/admin/ingredients}">Ингредиенты</a>
+            <a th:href="@{'/admin/ingredients'}">Ингредиенты</a>
         </li>
         <li>
-            <a th:href="@{/}">Заказы</a>
+            <a th:href="@{'/admin/showOrders'}">Заказы</a>
         </li>
     </ul>
 </div>
